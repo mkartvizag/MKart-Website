@@ -40,7 +40,7 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .card-title, .h4-heading {
     color: var(--color-black);
     font-weight: 800;
     line-height: 1.15;
@@ -931,7 +931,7 @@ ul {
     margin: 0 auto 20px;
 }
 
-.why-card h4 {
+.why-card h4, .why-card .h4-heading {
     font-size: 1.2rem;
     margin-bottom: 12px;
 }
@@ -987,7 +987,7 @@ ul {
     flex-shrink: 0;
 }
 
-.info-text h4 {
+.info-text h4, .info-text .h4-heading {
     font-size: 1.3rem;
     margin-bottom: 10px;
 }
@@ -1033,7 +1033,7 @@ ul {
     display: inline-block;
 }
 
-.footer h4 {
+.footer h4, .footer .h4-heading {
     color: var(--color-white);
     font-size: 1.2rem;
     margin-bottom: 25px;
