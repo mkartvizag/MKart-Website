@@ -422,7 +422,7 @@ ul {
 .hero-image-wrapper {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     position: relative;
     animation: fadeLeft 1s ease forwards;
 }
@@ -532,7 +532,7 @@ ul {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     overflow: hidden;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .promo-badge {
