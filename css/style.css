@@ -522,38 +522,24 @@ ul {
 }
 
 /* Abstract Graphic for Hero */
-.abstract-graphic {
+.promo-banner-container {
     position: relative;
-    width: 450px;
-    height: 450px;
-}
-
-.circle {
-    position: absolute;
-    border-radius: 50%;
-}
-
-.circle-1 {
     width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--color-gray-light) 0%, #eaeaea 100%);
-    top: 0;
-    left: 0;
-    box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
-}
-
-.circle-2 {
-    width: 70%;
-    height: 70%;
-    background-color: var(--color-black);
-    top: 15%;
-    left: 15%;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    overflow: hidden; /* For the slider */
+    max-width: 450px;
+    aspect-ratio: 4 / 5;
+    background-color: var(--color-white);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 .hero-image-slider {
     position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     display: flex;
 }
 
@@ -572,46 +558,7 @@ ul {
     opacity: 1;
 }
 
-.floating-icon {
-    position: absolute;
-    color: var(--color-white);
-    background-color: var(--color-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 20px rgba(230,0,0,0.3);
-    animation: float 4s ease-in-out infinite;
-}
 
-.icon-1 {
-    width: 100px;
-    height: 100px;
-    font-size: 2.5rem;
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.icon-2 {
-    width: 80px;
-    height: 80px;
-    font-size: 2rem;
-    bottom: 20%;
-    right: 5%;
-    background-color: var(--color-black);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    animation-delay: 1s;
-}
-
-.icon-3 {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    top: 40%;
-    right: -5%;
-    animation-delay: 2s;
-}
 
 @keyframes float {
     0% { transform: translateY(0px); }
@@ -1217,10 +1164,7 @@ ul {
         grid-template-columns: 1fr;
     }
     
-    .abstract-graphic {
-        width: 300px;
-        height: 300px;
-    }
+    
 
     .hero-stats {
         flex-wrap: wrap;

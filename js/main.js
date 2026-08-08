@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 6. Hero Image Slider
     const heroSlides = document.querySelectorAll('.hero-slide');
-    if (heroSlides.length > 0) {
+    if (heroSlides.length > 1) {
         let currentSlide = 0;
         setInterval(() => {
             heroSlides[currentSlide].classList.remove('active');
