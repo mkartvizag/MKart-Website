@@ -525,8 +525,9 @@ ul {
 .promo-banner-container {
     position: relative;
     width: 100%;
-    max-width: 450px;
-    aspect-ratio: 4 / 5;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
     background-color: var(--color-white);
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
@@ -535,29 +536,22 @@ ul {
 }
 
 .promo-badge {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.95);
-    padding: 8px 16px;
-    border-radius: 20px;
+    background: var(--color-white);
+    color: var(--color-black);
+    text-align: center;
+    padding: 10px 12px;
     font-weight: 700;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-size: 0.95rem;
     z-index: 10;
-    white-space: nowrap;
+    border-bottom: 1px solid #eee;
 }
 
 .promo-actions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    padding: 30px 15px 20px;
+    padding: 10px;
     display: flex;
     gap: 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    background: var(--color-white);
     z-index: 10;
     justify-content: center;
 }
@@ -593,11 +587,9 @@ ul {
 }
 
 .hero-image-slider {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    aspect-ratio: 4 / 5;
     display: flex;
 }
 
