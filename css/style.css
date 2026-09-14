@@ -166,6 +166,17 @@ ul {
     transition: var(--transition);
 }
 
+.festive-ticker {
+    background-color: #ff3300; /* Festive bright orange-red */
+    max-height: 45px;
+    padding: 10px 0;
+}
+
+.festive-ticker .promo-track span {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
 .promo-track {
     display: inline-flex;
     animation: scrollPromo 22s linear infinite;
