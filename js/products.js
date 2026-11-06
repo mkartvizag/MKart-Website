@@ -298,8 +298,8 @@ Please confirm availability for Gajuwaka pickup / delivery.`);
                             <button type="button" class="fk-btn-specs" onclick="window.mkartCatalog.openQuickSheet('${product.id}')" title="Quick View">
                                 <i class="fa-solid fa-eye"></i> Quick View
                             </button>
-                            <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-btn-whatsapp" title="Direct WhatsApp Order">
-                                <i class="fa-brands fa-whatsapp"></i> Buy
+                            <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-btn-whatsapp" title="Instant Order via WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i> Order Now
                             </a>
                         </div>
                     </div>
@@ -413,7 +413,7 @@ Please confirm stock for Gajuwaka store pickup / delivery in Vizag.`);
             <!-- Sheet Bottom Action Buttons -->
             <div class="sheet-actions-wrapper">
                 <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="sheet-btn-buy-wa">
-                    <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> ORDER ON WHATSAPP NOW
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> ORDER NOW
                 </a>
                 <div class="sheet-secondary-row">
                     <a href="tel:+919966258855" class="sheet-btn-call">

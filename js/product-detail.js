@@ -253,8 +253,8 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                target="_blank" 
                                rel="noopener" 
                                class="fk-btn-buy-wa"
-                               aria-label="Order on WhatsApp">
-                                <i class="fa-brands fa-whatsapp"></i> ORDER ON WHATSAPP
+                               aria-label="Order Now via WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i> ORDER NOW
                             </a>
                             <a href="tel:+919966258855" 
                                class="fk-btn-call-store"
@@ -384,8 +384,8 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                     <a href="tel:+919966258855" class="fk-mobile-btn-call" aria-label="Call store">
                         <i class="fa-solid fa-phone"></i> Call
                     </a>
-                    <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-mobile-btn-wa" aria-label="Order on WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i> Buy Now
+                    <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-mobile-btn-wa" aria-label="Order Now via WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i> Order Now
                     </a>
                 </div>
             </div>
@@ -459,7 +459,7 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                rel="noopener" 
                                class="fk-btn-whatsapp" 
                                style="text-decoration:none; text-align:center;">
-                                <i class="fa-brands fa-whatsapp"></i> Buy
+                                <i class="fa-brands fa-whatsapp"></i> Order Now
                             </a>
                         </div>
                     </div>
