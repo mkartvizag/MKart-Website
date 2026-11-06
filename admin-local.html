@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/cropper.min.css">
     <style>
         :root {
             --primary: #e60000;
@@ -313,6 +314,92 @@
             display: none;
             z-index: 1000;
             font-weight: 600;
+        }
+
+        /* Crop & Rotate Modal Styles */
+        dialog.crop-modal {
+            max-width: 680px;
+            width: 95vw;
+        }
+        .crop-modal-body {
+            padding: 16px 20px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+        .cropper-stage {
+            width: 100%;
+            height: 380px;
+            max-height: 48vh;
+            background: #0b0f19;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+        .cropper-stage img {
+            max-width: 100%;
+            display: block;
+        }
+        .crop-toolbar {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .crop-toolbar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .crop-toolbar-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 58px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .crop-btn-group {
+            display: inline-flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .crop-tool-btn {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 7px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .crop-tool-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .crop-tool-btn.active {
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 6px rgba(230, 0, 0, 0.25);
+        }
+        .crop-tool-btn:active {
+            transform: scale(0.96);
         }
 
         /* Trending Showcase Manager in Admin */
@@ -646,6 +733,17 @@
             }
             .modal-header, .modal-footer {
                 padding: 12px 14px !important;
+            }
+            .cropper-stage {
+                height: 270px !important;
+                max-height: 40vh !important;
+            }
+            .crop-modal-body {
+                padding: 12px !important;
+            }
+            .crop-tool-btn {
+                padding: 7px 10px !important;
+                font-size: 0.76rem !important;
             }
         }
 
@@ -1705,8 +1803,99 @@
         </div>
     </dialog>
 
+    <!-- Interactive Image Crop, Rotate & Flip Modal -->
+    <dialog id="cropModal" class="admin-modal crop-modal">
+        <div class="modal-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(230, 0, 0, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+                    <i class="fa-solid fa-crop-simple"></i>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; line-height: 1.2;">Crop &amp; Rotate Photo</h3>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                        <span id="cropQueueBadge" style="background: #e2e8f0; color: #334155; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px;">Photo 1 of 1</span>
+                        <span id="cropFileName" style="font-size: 0.78rem; color: #64748b; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">photo.jpg</span>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" onclick="cancelCropAll()" title="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="modal-body crop-modal-body">
+            <!-- Cropper Canvas Stage -->
+            <div class="cropper-stage">
+                <img id="cropTargetImage" alt="Upload Crop Preview">
+            </div>
+
+            <!-- Controls Toolbar -->
+            <div class="crop-toolbar">
+                <!-- Ratio Selector -->
+                <div class="crop-toolbar-row">
+                    <span class="crop-toolbar-label"><i class="fa-solid fa-shapes"></i> Ratio:</span>
+                    <div class="crop-btn-group">
+                        <button type="button" class="crop-tool-btn crop-aspect-btn active" id="cropBtnAspect11" onclick="setCropAspectRatio(1, this)">
+                            <i class="fa-regular fa-square"></i> 1:1 Square
+                        </button>
+                        <button type="button" class="crop-tool-btn crop-aspect-btn" id="cropBtnAspect43" onclick="setCropAspectRatio(4/3, this)">
+                            <i class="fa-solid fa-rectangle-wide"></i> 4:3
+                        </button>
+                        <button type="button" class="crop-tool-btn crop-aspect-btn" id="cropBtnAspectFree" onclick="setCropAspectRatio(NaN, this)">
+                            <i class="fa-solid fa-vector-square"></i> Freeform
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rotate, Flip, Zoom, Reset Controls -->
+                <div class="crop-toolbar-row">
+                    <span class="crop-toolbar-label"><i class="fa-solid fa-sliders"></i> Tools:</span>
+                    <div class="crop-btn-group">
+                        <button type="button" class="crop-tool-btn" onclick="rotateCropper(-90)" title="Rotate 90° Left">
+                            <i class="fa-solid fa-rotate-left"></i> Left 90°
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="rotateCropper(90)" title="Rotate 90° Right">
+                            <i class="fa-solid fa-rotate-right"></i> Right 90°
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="flipCropperH()" title="Flip Horizontal">
+                            <i class="fa-solid fa-arrows-left-right"></i> Flip H
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="flipCropperV()" title="Flip Vertical">
+                            <i class="fa-solid fa-arrows-up-down"></i> Flip V
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="zoomCropper(0.1)" title="Zoom In">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="zoomCropper(-0.1)" title="Zoom Out">
+                            <i class="fa-solid fa-magnifying-glass-minus"></i>
+                        </button>
+                        <button type="button" class="crop-tool-btn" onclick="resetCropperState()" title="Reset All Adjustments">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="cancelCropAll()" style="color: #64748b;">
+                Cancel
+            </button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" id="btnSkipCrop" onclick="skipCropCurrent()" title="Skip cropping and upload original image directly">
+                    <i class="fa-solid fa-forward"></i> Skip (Upload Original)
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnConfirmCrop" onclick="confirmCropCurrent()" style="min-width: 140px; font-weight: 700;">
+                    <i class="fa-solid fa-check"></i> Crop &amp; Upload
+                </button>
+            </div>
+        </div>
+    </dialog>
+
     <div id="toast" class="toast"></div>
 
+    <!-- Cropper.js Library -->
+    <script src="js/cropper.min.js"></script>
     <script>
         let products = [];
         let newProdPhotos = [];
@@ -2182,18 +2371,22 @@
         const newFileInput = document.getElementById('newProdFileInput');
         if (newFileInput) {
             newFileInput.addEventListener('change', async (e) => {
-                await handleFileUpload(Array.from(e.target.files), newProdPhotos, 'newProd');
+                const files = Array.from(e.target.files);
                 newFileInput.value = '';
-                renderNewProdPhotos();
+                if (files.length) {
+                    await handleFileUpload(files, newProdPhotos, 'newProd');
+                }
             });
         }
 
         const newCameraInput = document.getElementById('newProdCameraInput');
         if (newCameraInput) {
             newCameraInput.addEventListener('change', async (e) => {
-                await handleFileUpload(Array.from(e.target.files), newProdPhotos, 'newProd');
+                const files = Array.from(e.target.files);
                 newCameraInput.value = '';
-                renderNewProdPhotos();
+                if (files.length) {
+                    await handleFileUpload(files, newProdPhotos, 'newProd');
+                }
             });
         }
 
@@ -2268,66 +2461,312 @@
             });
         }
 
+        // ====================================================================
+        // INTERACTIVE IMAGE CROP, ROTATE & FLIP WORKFLOW (MOBILE & DESKTOP)
+        // ====================================================================
+        let cropQueue = [];
+        let cropQueueIndex = 0;
+        let cropTargetArray = null;
+        let cropPrefix = '';
+        let cropperInstance = null;
+        let cropScaleX = 1;
+        let cropScaleY = 1;
+
         async function handleFileUpload(files, targetArray, prefix) {
-            if (!files.length) return;
+            if (!files || !files.length) return;
+
+            const sbUrl = document.getElementById('sbUrl').value.trim().replace(/\/+$/, '');
+            const sbKey = document.getElementById('sbKey').value.trim();
+            if (!sbUrl || !sbKey) {
+                alert('Please check your Supabase URL & Key in Settings.');
+                return;
+            }
+
             if (targetArray.length + files.length > 6) {
                 alert(`Maximum 6 photos allowed per product! You currently have ${targetArray.length} photo(s).`);
                 return;
             }
 
-            const sbUrl = document.getElementById('sbUrl').value.trim().replace(/\/+$/, '');
-            const sbKey = document.getElementById('sbKey').value.trim();
-
-            if (!sbUrl || !sbKey) {
-                alert('Please check your Supabase URL & Key above.');
+            // Filter for valid image files
+            const validImageFiles = files.filter(f => !f.type || f.type.startsWith('image/'));
+            if (!validImageFiles.length) {
+                alert('Please select valid image files (JPG, PNG, WebP).');
                 return;
             }
 
-            const progressBox = document.getElementById(`${prefix}UploadProgress`);
-            const progressText = document.getElementById(`${prefix}ProgressText`);
-            if (progressBox) progressBox.style.display = 'block';
+            cropQueue = validImageFiles;
+            cropQueueIndex = 0;
+            cropTargetArray = targetArray;
+            cropPrefix = prefix;
 
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                if (progressText) progressText.textContent = `Optimizing & Uploading ${i + 1} of ${files.length} (${file.name})...`;
-
-                const compressed = await compressImage(file, 1200, 0.85);
-                if (!compressed || !compressed.buffer || compressed.buffer.byteLength === 0) {
-                    alert(`Could not process image "${file.name}". Please try picking the photo again.`);
-                    continue;
-                }
-
-                const cleanName = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${compressed.ext}`;
-                const uploadEndpoint = `${sbUrl}/storage/v1/object/products/${cleanName}`;
-
-                try {
-                    const res = await fetch(uploadEndpoint, {
-                        method: 'POST',
-                        headers: {
-                            'apikey': sbKey,
-                            'Authorization': `Bearer ${sbKey}`,
-                            'Content-Type': compressed.contentType
-                        },
-                        body: compressed.buffer
-                    });
-
-                    if (res.ok) {
-                        const publicUrl = `${sbUrl}/storage/v1/object/public/products/${cleanName}`;
-                        targetArray.push(publicUrl);
-                        const kbSize = Math.round(compressed.buffer.byteLength / 1024);
-                        showToast(`Uploaded ${file.name} (${kbSize} KB)`);
-                    } else {
-                        const err = await res.json().catch(() => ({}));
-                        alert(`Upload failed: ${err.message || 'Ensure public bucket named "products" exists in Supabase Storage'}`);
-                        break;
-                    }
-                } catch (err) {
-                    alert(`Network error during upload: ${err.message}`);
-                    break;
+            const modal = document.getElementById('cropModal');
+            if (modal) {
+                if (typeof modal.showModal === 'function') {
+                    modal.showModal();
+                } else {
+                    modal.setAttribute('open', '');
                 }
             }
 
-            if (progressBox) progressBox.style.display = 'none';
+            // Allow modal dialog DOM layout to complete before initializing Cropper
+            setTimeout(() => {
+                loadCurrentCropItem();
+            }, 80);
+        }
+
+        function loadCurrentCropItem() {
+            if (!cropQueue || cropQueueIndex >= cropQueue.length) {
+                closeCropModal();
+                return;
+            }
+
+            const file = cropQueue[cropQueueIndex];
+            const badge = document.getElementById('cropQueueBadge');
+            if (badge) badge.textContent = `Photo ${cropQueueIndex + 1} of ${cropQueue.length}`;
+
+            const nameEl = document.getElementById('cropFileName');
+            if (nameEl) nameEl.textContent = file.name;
+
+            // Reset buttons state
+            const btnConfirm = document.getElementById('btnConfirmCrop');
+            const btnSkip = document.getElementById('btnSkipCrop');
+            if (btnConfirm) {
+                btnConfirm.disabled = false;
+                btnConfirm.innerHTML = `<i class="fa-solid fa-check"></i> Crop &amp; Upload`;
+            }
+            if (btnSkip) {
+                btnSkip.disabled = false;
+                btnSkip.innerHTML = `<i class="fa-solid fa-forward"></i> Skip (Upload Original)`;
+            }
+
+            // Reset transforms
+            cropScaleX = 1;
+            cropScaleY = 1;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.getElementById('cropTargetImage');
+                if (cropperInstance) {
+                    cropperInstance.destroy();
+                    cropperInstance = null;
+                }
+                img.src = e.target.result;
+
+                img.onload = () => {
+                    if (cropperInstance) {
+                        cropperInstance.destroy();
+                        cropperInstance = null;
+                    }
+                    cropperInstance = new Cropper(img, {
+                        aspectRatio: 1, // Default 1:1 Square for product cards
+                        viewMode: 1,
+                        dragMode: 'move',
+                        autoCropArea: 0.9,
+                        restore: false,
+                        guides: true,
+                        center: true,
+                        highlight: false,
+                        cropBoxMovable: true,
+                        cropBoxResizable: true,
+                        toggleDragModeOnDblclick: false,
+                        responsive: true,
+                        checkCrossOrigin: false,
+                        ready() {
+                            document.querySelectorAll('.crop-aspect-btn').forEach(b => b.classList.remove('active'));
+                            const btn11 = document.getElementById('cropBtnAspect11');
+                            if (btn11) btn11.classList.add('active');
+                        }
+                    });
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function setCropAspectRatio(ratio, btnEl) {
+            if (!cropperInstance) return;
+            cropperInstance.setAspectRatio(ratio);
+            document.querySelectorAll('.crop-aspect-btn').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+        }
+
+        function rotateCropper(degree) {
+            if (!cropperInstance) return;
+            cropperInstance.rotate(degree);
+        }
+
+        function flipCropperH() {
+            if (!cropperInstance) return;
+            cropScaleX = -cropScaleX;
+            cropperInstance.scaleX(cropScaleX);
+        }
+
+        function flipCropperV() {
+            if (!cropperInstance) return;
+            cropScaleY = -cropScaleY;
+            cropperInstance.scaleY(cropScaleY);
+        }
+
+        function zoomCropper(ratio) {
+            if (!cropperInstance) return;
+            cropperInstance.zoom(ratio);
+        }
+
+        function resetCropperState() {
+            if (!cropperInstance) return;
+            cropScaleX = 1;
+            cropScaleY = 1;
+            cropperInstance.reset();
+            setCropAspectRatio(1, document.getElementById('cropBtnAspect11'));
+        }
+
+        async function confirmCropCurrent() {
+            if (!cropperInstance) return;
+            const file = cropQueue[cropQueueIndex];
+            if (!file) return;
+
+            const btnConfirm = document.getElementById('btnConfirmCrop');
+            const btnSkip = document.getElementById('btnSkipCrop');
+            if (btnConfirm) {
+                btnConfirm.disabled = true;
+                btnConfirm.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Cropping...`;
+            }
+            if (btnSkip) btnSkip.disabled = true;
+
+            try {
+                // Get cropped canvas (up to 1400x1400) with clean white background
+                const canvas = cropperInstance.getCroppedCanvas({
+                    maxWidth: 1400,
+                    maxHeight: 1400,
+                    fillColor: '#ffffff',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high'
+                });
+
+                if (!canvas) {
+                    throw new Error('Canvas rendering failed');
+                }
+
+                canvas.toBlob(async (blob) => {
+                    if (!blob || blob.size === 0) {
+                        alert('Could not render cropped image. Uploading original photo.');
+                        await uploadOriginalCurrentFile(file);
+                    } else {
+                        if (btnConfirm) btnConfirm.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading...`;
+                        const buffer = await blob.arrayBuffer();
+                        await uploadBufferToSupabase(buffer, 'image/jpeg', 'jpg', file.name, true);
+                    }
+                    advanceCropQueue();
+                }, 'image/jpeg', 0.88);
+            } catch (err) {
+                console.error('Crop error:', err);
+                alert(`Crop processing failed: ${err.message}. Uploading original.`);
+                await uploadOriginalCurrentFile(file);
+                advanceCropQueue();
+            }
+        }
+
+        async function skipCropCurrent() {
+            const file = cropQueue[cropQueueIndex];
+            if (!file) return;
+
+            const btnConfirm = document.getElementById('btnConfirmCrop');
+            const btnSkip = document.getElementById('btnSkipCrop');
+            if (btnSkip) {
+                btnSkip.disabled = true;
+                btnSkip.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading...`;
+            }
+            if (btnConfirm) btnConfirm.disabled = true;
+
+            await uploadOriginalCurrentFile(file);
+            advanceCropQueue();
+        }
+
+        async function uploadOriginalCurrentFile(file) {
+            const compressed = await compressImage(file, 1200, 0.85);
+            if (!compressed || !compressed.buffer || compressed.buffer.byteLength === 0) {
+                alert(`Could not process "${file.name}".`);
+                return;
+            }
+            await uploadBufferToSupabase(compressed.buffer, compressed.contentType, compressed.ext, file.name, false);
+        }
+
+        async function uploadBufferToSupabase(buffer, contentType, ext, originalName, isCropped = false) {
+            const sbUrl = document.getElementById('sbUrl').value.trim().replace(/\/+$/, '');
+            const sbKey = document.getElementById('sbKey').value.trim();
+            const cleanName = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${ext}`;
+            const uploadEndpoint = `${sbUrl}/storage/v1/object/products/${cleanName}`;
+
+            try {
+                const res = await fetch(uploadEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': sbKey,
+                        'Authorization': `Bearer ${sbKey}`,
+                        'Content-Type': contentType
+                    },
+                    body: buffer
+                });
+
+                if (res.ok) {
+                    const publicUrl = `${sbUrl}/storage/v1/object/public/products/${cleanName}`;
+                    cropTargetArray.push(publicUrl);
+                    const kbSize = Math.round(buffer.byteLength / 1024);
+                    showToast(`${isCropped ? 'Cropped & Uploaded' : 'Uploaded'} ${originalName} (${kbSize} KB)`);
+                    refreshPhotosGrid();
+                    return true;
+                } else {
+                    const err = await res.json().catch(() => ({}));
+                    alert(`Upload failed: ${err.message || 'Ensure public bucket named "products" exists in Supabase Storage'}`);
+                    return false;
+                }
+            } catch (err) {
+                alert(`Network error during upload: ${err.message}`);
+                return false;
+            }
+        }
+
+        function refreshPhotosGrid() {
+            if (cropPrefix === 'newProd') {
+                renderNewProdPhotos();
+            } else if (cropPrefix === 'editProd') {
+                renderPhotosGrid('editProdPhotosGrid', editProdPhotos, 'edit');
+            }
+        }
+
+        function advanceCropQueue() {
+            cropQueueIndex++;
+            if (cropQueueIndex < cropQueue.length) {
+                loadCurrentCropItem();
+            } else {
+                closeCropModal();
+                if (cropQueue.length > 1) {
+                    showToast(`All ${cropQueue.length} photos uploaded successfully!`);
+                }
+            }
+        }
+
+        function closeCropModal() {
+            if (cropperInstance) {
+                cropperInstance.destroy();
+                cropperInstance = null;
+            }
+            cropQueue = [];
+            cropQueueIndex = 0;
+            const modal = document.getElementById('cropModal');
+            if (modal && modal.open) {
+                modal.close();
+            }
+            refreshPhotosGrid();
+        }
+
+        function cancelCropAll() {
+            if (cropQueue && cropQueue.length > 0 && cropQueueIndex < cropQueue.length) {
+                const remaining = cropQueue.length - cropQueueIndex;
+                if (!confirm(`Cancel upload for remaining ${remaining} photo(s)?`)) {
+                    return;
+                }
+            }
+            closeCropModal();
         }
 
         function renderNewProdPhotos() {
@@ -2740,18 +3179,22 @@
         const editFileInput = document.getElementById('editProdFileInput');
         if (editFileInput) {
             editFileInput.addEventListener('change', async (e) => {
-                await handleFileUpload(Array.from(e.target.files), editProdPhotos, 'editProd');
+                const files = Array.from(e.target.files);
                 editFileInput.value = '';
-                renderPhotosGrid('editProdPhotosGrid', editProdPhotos, 'edit');
+                if (files.length) {
+                    await handleFileUpload(files, editProdPhotos, 'editProd');
+                }
             });
         }
 
         const editCameraInput = document.getElementById('editProdCameraInput');
         if (editCameraInput) {
             editCameraInput.addEventListener('change', async (e) => {
-                await handleFileUpload(Array.from(e.target.files), editProdPhotos, 'editProd');
+                const files = Array.from(e.target.files);
                 editCameraInput.value = '';
-                renderPhotosGrid('editProdPhotosGrid', editProdPhotos, 'edit');
+                if (files.length) {
+                    await handleFileUpload(files, editProdPhotos, 'editProd');
+                }
             });
         }
 
@@ -3184,6 +3627,19 @@
         });
 
         // Init
+        // Crop Modal cancel event listener (e.g. on Escape key)
+        const cropModalEl = document.getElementById('cropModal');
+        if (cropModalEl) {
+            cropModalEl.addEventListener('cancel', () => {
+                if (cropperInstance) {
+                    cropperInstance.destroy();
+                    cropperInstance = null;
+                }
+                cropQueue = [];
+                refreshPhotosGrid();
+            });
+        }
+
         checkPinAuth();
         loadProducts();
         updateNewProdDiscount();
