@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MKart Admin">
     <meta name="theme-color" content="#e60000">
+    <link rel="manifest" href="admin-manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <title>MKart Local Admin - Full Product, Photo & Price Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -531,33 +534,84 @@
             40%, 80% { transform: translateX(10px); }
         }
 
-        /* Mobile Specific Responsiveness */
+        /* Mobile Specific Responsiveness & Native App Styles */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 62px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+            z-index: 1000;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 4px;
+        }
+
+        .mobile-inventory-list {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding-bottom: 80px !important;
+            }
+            .mobile-bottom-nav {
+                display: flex !important;
+            }
+            .admin-tab-section {
+                display: none;
+            }
+            .admin-tab-section.active-tab {
+                display: block !important;
+            }
+            .desktop-inventory-table {
+                display: none !important;
+            }
+            .mobile-inventory-list {
+                display: flex !important;
+            }
             .admin-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 12px 16px;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 10px 14px !important;
+            }
+            .admin-title h1 {
+                font-size: 1.05rem !important;
+            }
+            .admin-badge {
+                display: none !important;
+            }
+            #connIndicator {
+                display: none !important; /* available in settings tab */
             }
             .admin-header-actions {
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
+                display: flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                width: auto !important;
             }
             .admin-header-actions .btn {
-                flex: 1 1 auto;
-                padding: 8px 10px;
-                font-size: 0.8rem;
-                justify-content: center;
+                padding: 6px 10px !important;
+                font-size: 0.75rem !important;
+            }
+            .desktop-only-btn {
+                display: none !important;
             }
             .container {
-                padding: 0 10px;
-                margin: 16px auto;
+                padding: 0 10px !important;
+                margin: 12px auto !important;
             }
             .settings-card {
-                padding: 16px 14px;
-                border-radius: 12px;
+                padding: 14px 12px !important;
+                border-radius: 12px !important;
+                margin-bottom: 14px !important;
             }
             .form-grid {
                 grid-template-columns: 1fr !important;
@@ -565,40 +619,220 @@
             }
             .form-control {
                 font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
-                padding: 12px 14px;
+                padding: 11px 12px !important;
             }
             .photo-cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            th, td {
-                padding: 10px 8px;
-                font-size: 0.85rem;
-            }
-            .prod-thumb {
-                width: 42px;
-                height: 42px;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
             }
             .table-toolbar {
-                padding: 14px 16px;
-                flex-direction: column;
-                align-items: stretch;
+                padding: 12px 14px !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
             }
             .table-toolbar input {
                 max-width: 100% !important;
-                width: 100%;
+                width: 100% !important;
+                font-size: 16px !important;
             }
             dialog.admin-modal {
-                width: 96vw;
-                max-height: 94vh;
-                border-radius: 12px;
+                width: 96vw !important;
+                max-height: 94vh !important;
+                border-radius: 12px !important;
             }
             .modal-body {
-                padding: 14px;
+                padding: 14px !important;
             }
             .modal-header, .modal-footer {
-                padding: 12px 16px;
+                padding: 12px 14px !important;
             }
+        }
+
+        .mobile-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 6px 2px;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-nav-item i {
+            font-size: 1.15rem;
+            transition: transform 0.2s ease;
+        }
+        .mobile-nav-item.active {
+            color: #e60000;
+        }
+        .mobile-nav-item.active i {
+            transform: translateY(-2px);
+        }
+        .nav-count-badge {
+            position: absolute;
+            top: 2px;
+            right: 22%;
+            background: #e60000;
+            color: #fff;
+            font-size: 0.62rem;
+            padding: 1px 5px;
+            border-radius: 99px;
+            font-weight: 800;
+        }
+
+        /* Mobile Product Cards */
+        .mobile-prod-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .mobile-card-thumb-box {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .mobile-card-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .mobile-img-count {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: #0f172a;
+            color: #fff;
+            font-size: 0.58rem;
+            font-weight: 700;
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+        .mobile-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .mobile-card-chips {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+        }
+        .mobile-chip {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 3px;
+            line-height: 1.2;
+        }
+        .mobile-chip-trending {
+            background: #fee2e2;
+            color: #e60000;
+        }
+        .mobile-chip-stock.in-stock {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .mobile-chip-stock.out-of-stock {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .mobile-chip-badge {
+            background: #0f172a;
+            color: #ffffff;
+        }
+        .mobile-card-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        .mobile-card-sub {
+            font-size: 0.72rem;
+            color: #64748b;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mobile-card-prices {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+        .mobile-card-price {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .mobile-card-mrp {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+        .mobile-card-discount {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #16a34a;
+            background: #dcfce7;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        .mobile-card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .mobile-btn-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #0f172a;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .mobile-btn-action.edit-btn {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #2563eb;
+        }
+        .mobile-btn-action.del-btn {
+            background: #fef2f2;
+            border-color: #fecdd3;
+            color: #e60000;
         }
     </style>
 </head>
@@ -661,13 +895,16 @@
             </span>
         </div>
         <div class="admin-header-actions" style="display: flex; gap: 8px;">
-            <a href="http://localhost:3000" target="_blank" class="btn btn-outline" title="Open Store">
+            <button id="mobileInstallAppBtn" type="button" class="btn btn-outline" onclick="installAdminApp()" style="display: inline-flex; align-items: center; gap: 6px; border-color: #e60000; color: #e60000; background: #fff5f5;" title="Install MKart Admin App">
+                <i class="fa-solid fa-mobile-screen-button"></i> Install App
+            </button>
+            <a href="http://localhost:3000" target="_blank" class="btn btn-outline desktop-only-btn" title="Open Store">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Store
             </a>
-            <button id="sitemapBtn" class="btn btn-outline" title="Generate Google Sitemap (sitemap.xml) for all products">
+            <button id="sitemapBtn" class="btn btn-outline desktop-only-btn" title="Generate Google Sitemap (sitemap.xml) for all products">
                 <i class="fa-solid fa-sitemap"></i> Sitemap
             </button>
-            <button id="backupBtn" class="btn btn-outline" title="Download JSON Backup">
+            <button id="backupBtn" class="btn btn-outline desktop-only-btn" title="Download JSON Backup">
                 <i class="fa-solid fa-download"></i> Backup
             </button>
             <button type="button" class="btn btn-outline" onclick="lockAdminSession()" title="Lock Admin Screen" style="border-color: #fecdd3; color: #e60000;">
@@ -677,363 +914,429 @@
     </header>
 
     <div class="container">
-        <!-- Supabase Connection Config -->
-        <div class="settings-card">
-            <h3><i class="fa-solid fa-database text-red"></i> Live Supabase Cloud Connection</h3>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Supabase Project URL</label>
-                    <input type="text" id="sbUrl" class="form-control" value="https://qryizrgkzamytqyebmuy.supabase.co">
-                </div>
-                <div class="form-group">
-                    <label>Supabase Key (Publishable or Service Key)</label>
-                    <input type="password" id="sbKey" class="form-control" value="sb_publishable_TYj0vqJF7UYuWS08CwONsQ_C17O8oxD">
-                </div>
-            </div>
-            <div style="margin-top: 14px; display: flex; gap: 10px;">
-                <button id="refreshBtn" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> Refresh from Supabase</button>
-            </div>
-        </div>
-
-        <!-- Today's Trending Gadgets Showcase Manager (Top Carousel) -->
-        <div class="settings-card" id="trendingShowcaseCard" style="border-left: 5px solid #e60000;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
-                <div>
-                    <h3 style="margin-bottom: 4px; font-size: 1.2rem;">
-                        <i class="fa-solid fa-fire text-red"></i> Today's Trending Gadgets Showcase (Top Auto-Slider)
-                    </h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">
-                        Select up to <strong>4 products</strong> from your existing inventory to feature at the top on both Mobile and Desktop. Auto-scrolls with instant 1-click WhatsApp ordering.
-                    </p>
-                </div>
-                <div style="display: flex; gap: 10px;">
-                    <button type="button" class="btn btn-primary" onclick="saveTrendingShowcase()">
-                        <i class="fa-solid fa-floppy-disk"></i> Save Trending to Supabase
-                    </button>
-                    <a href="http://localhost:3000" target="_blank" class="btn btn-outline" title="Open Store to see live slider">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Store
-                    </a>
-                </div>
-            </div>
-
-            <div class="trending-admin-grid">
-                <!-- Left: 4 Slots Config -->
-                <div class="trending-slots-container" style="display: flex; flex-direction: column; gap: 14px;">
-                    <!-- Slot 1 -->
-                    <div class="trending-slot-card is-active-slot" id="slotCard1">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
-                                <i class="fa-solid fa-1 text-red"></i> SLOT 1 (Primary / Top Cover) *
-                            </span>
-                            <span class="photo-badge photo-badge-cover">FEATURED #1</span>
-                        </div>
-                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product from Inventory *</label>
-                                <select id="tsProduct1" class="form-control" onchange="updateTrendingSlotPreview(1)">
-                                    <option value="">-- Choose Product for Slot 1 --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
-                                <input type="text" id="tsBadge1" class="form-control" placeholder="Today's Trending Gadget" value="Today's Trending Gadget" oninput="updateTrendingSlotPreview(1)">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Video / Reel Link (Instagram / YouTube)</label>
-                                <input type="url" id="tsVideo1" class="form-control" placeholder="https://instagram.com/reel/..." value="https://www.instagram.com/reel/DbvZprNiFGD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" oninput="updateTrendingSlotPreview(1)">
-                            </div>
-                        </div>
+        <!-- ========================================== -->
+        <!-- TAB 1: INVENTORY (Default Active on Mobile) -->
+        <!-- ========================================== -->
+        <div id="tab-inventory" class="admin-tab-section active-tab">
+            <div class="products-table-card">
+                <div class="table-toolbar">
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px; flex-wrap: wrap;">
+                        <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800;">
+                            <i class="fa-solid fa-boxes-stacked text-red"></i> Store Inventory (<span id="totalCount">0</span> items)
+                        </h3>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="switchMobileTab('add-product')" style="display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-circle-plus"></i> Add Product
+                        </button>
                     </div>
-
-                    <!-- Slot 2 -->
-                    <div class="trending-slot-card" id="slotCard2">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
-                                <i class="fa-solid fa-2 text-red"></i> SLOT 2
-                            </span>
-                            <span class="photo-badge photo-badge-sub">SLOT #2</span>
-                        </div>
-                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
-                                <select id="tsProduct2" class="form-control" onchange="updateTrendingSlotPreview(2)">
-                                    <option value="">-- [None / Empty] --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
-                                <input type="text" id="tsBadge2" class="form-control" placeholder="⚡ 65W GaN Fast Charger" oninput="updateTrendingSlotPreview(2)">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
-                                <input type="url" id="tsVideo2" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(2)">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slot 3 -->
-                    <div class="trending-slot-card" id="slotCard3">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
-                                <i class="fa-solid fa-3 text-red"></i> SLOT 3
-                            </span>
-                            <span class="photo-badge photo-badge-sub">SLOT #3</span>
-                        </div>
-                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
-                                <select id="tsProduct3" class="form-control" onchange="updateTrendingSlotPreview(3)">
-                                    <option value="">-- [None / Empty] --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
-                                <input type="text" id="tsBadge3" class="form-control" placeholder="⌚ Smart Watch Ultra 2" oninput="updateTrendingSlotPreview(3)">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
-                                <input type="url" id="tsVideo3" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(3)">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slot 4 -->
-                    <div class="trending-slot-card" id="slotCard4">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
-                                <i class="fa-solid fa-4 text-red"></i> SLOT 4
-                            </span>
-                            <span class="photo-badge photo-badge-sub">SLOT #4</span>
-                        </div>
-                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
-                                <select id="tsProduct4" class="form-control" onchange="updateTrendingSlotPreview(4)">
-                                    <option value="">-- [None / Empty] --</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
-                                <input type="text" id="tsBadge4" class="form-control" placeholder="🛡️ MagSafe Frosted Case" oninput="updateTrendingSlotPreview(4)">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
-                                <input type="url" id="tsVideo4" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(4)">
-                            </div>
-                        </div>
-                    </div>
+                    <input type="text" id="tableSearch" class="form-control" style="max-width: 280px;" placeholder="Search products...">
                 </div>
 
-                <!-- Right: Live Interactive Auto-Scroll Preview in Admin -->
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; position: sticky; top: 80px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <span style="font-size: 0.82rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
-                            <i class="fa-solid fa-eye text-red"></i> Live Carousel Preview (Auto-Changes)
-                        </span>
-                        <span id="adminPreviewSlotIndex" style="font-size: 0.75rem; font-weight: 700; background: #e2e8f0; padding: 2px 8px; border-radius: 4px;">
-                            Slot 1 of 4
-                        </span>
-                    </div>
+                <!-- Desktop Table View (Hidden on mobile) -->
+                <div class="table-responsive desktop-inventory-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cover Photo</th>
+                                <th>Product &amp; Category</th>
+                                <th>Badge &amp; Offer</th>
+                                <th>Offer Price (₹)</th>
+                                <th>MRP (₹)</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <!-- Populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
 
-                    <!-- Mock Promo Banner -->
-                    <div class="promo-banner-container" id="adminTrendingMockBanner" style="max-width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
-                        <div class="promo-badge" id="mockPromoBadge" style="padding: 8px 10px; font-size: 0.85rem;">
-                            <i class="fa-solid fa-fire text-red"></i> <span id="mockBadgeText">Today's Trending Gadget</span>
-                        </div>
-                        <div class="hero-image-slider" style="aspect-ratio: 4 / 4.2; background: #fafafa; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                            <img id="mockSlideImg" src="images/hero-slider/mini-printer.png" style="width: 100%; height: 100%; object-fit: contain; transition: opacity 0.35s ease;" alt="Preview">
-                        </div>
-                        <div class="promo-product-info" style="padding: 8px 12px 4px;">
-                            <div class="promo-title" id="mockProductTitle" style="font-size: 0.88rem;">Mini Pocket Bluetooth Thermal Printer (Inkless)</div>
-                            <div class="promo-price-row">
-                                <span class="promo-price" id="mockProductPrice" style="font-size: 1.05rem;">₹1,199</span>
-                                <span class="promo-mrp" id="mockProductMrp" style="font-size: 0.8rem;">₹1,999</span>
-                                <span class="promo-discount" id="mockProductDiscount" style="font-size: 0.7rem;">40% OFF</span>
-                            </div>
-                        </div>
-                        <div class="promo-actions" style="padding: 8px 10px; gap: 6px;">
-                            <div class="promo-btn btn-whatsapp" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
-                                <i class="fa-brands fa-whatsapp"></i> Order Now
-                            </div>
-                            <div class="promo-btn btn-instagram" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
-                                <i class="fa-brands fa-instagram"></i> Watch Video
-                            </div>
-                        </div>
-                        <div class="promo-dots" id="mockDots" style="padding: 4px 0 8px;">
-                            <!-- Dots rendered dynamically -->
-                        </div>
-                    </div>
+                <!-- Mobile Cards View (Visible only on mobile) -->
+                <div id="mobileInventoryList" class="mobile-inventory-list" style="padding: 10px;">
+                    <!-- Populated dynamically via JavaScript -->
                 </div>
             </div>
         </div>
 
-        <!-- Add New Product Form -->
-        <div class="settings-card">
-            <h3><i class="fa-solid fa-circle-plus text-red"></i> Add New Product / Gadget</h3>
-            <form id="newProductForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Product Title *</label>
-                        <input type="text" id="npTitle" class="form-control" placeholder="e.g. 65W GaN Dual-Port Fast Charger" required>
+        <!-- ========================================== -->
+        <!-- TAB 2: TODAY'S TRENDING GADGETS SHOWCASE  -->
+        <!-- ========================================== -->
+        <div id="tab-trending" class="admin-tab-section">
+            <div class="settings-card" id="trendingShowcaseCard" style="border-left: 5px solid #e60000;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+                    <div>
+                        <h3 style="margin-bottom: 4px; font-size: 1.2rem;">
+                            <i class="fa-solid fa-fire text-red"></i> Today's Trending Gadgets Showcase (Top Auto-Slider)
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted);">
+                            Select up to <strong>4 products</strong> from your existing inventory to feature at the top on both Mobile and Desktop. Auto-scrolls with instant 1-click WhatsApp ordering.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label>Category *</label>
-                        <select id="npCategory" class="form-control" required>
-                            <option value="Cases & Covers">Cases & Covers</option>
-                            <option value="Fast Chargers">Fast Chargers</option>
-                            <option value="Screen Protectors">Screen Protectors</option>
-                            <option value="Audio & Speakers">Audio & Speakers</option>
-                            <option value="Smart Gadgets">Smart Gadgets</option>
-                            <option value="Holders & Stands">Holders & Stands</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Brand Name</label>
-                        <input type="text" id="npBrand" class="form-control" placeholder="e.g. Apple / boAt / MKart Pro">
-                    </div>
-                    <div class="form-group">
-                        <label>Stock Status</label>
-                        <select id="npStock" class="form-control">
-                            <option value="in_stock">In Stock (Available at Gajuwaka)</option>
-                            <option value="out_of_stock">Out of Stock</option>
-                        </select>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-primary" onclick="saveTrendingShowcase()">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Trending to Supabase
+                        </button>
+                        <a href="http://localhost:3000" target="_blank" class="btn btn-outline" title="Open Store to see live slider">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Store
+                        </a>
                     </div>
                 </div>
 
-                <!-- Price & Discount Control Grid -->
-                <div style="margin-top: 18px; padding: 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;">
-                    <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px; color: #0f172a;">
-                        <i class="fa-solid fa-tags text-red"></i> Price, MRP &amp; Discount Controls
-                    </h4>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Offer Price (Selling Price ₹) *</label>
-                            <input type="number" id="npPrice" class="form-control" placeholder="299" required oninput="updateNewProdDiscount()">
+                <div class="trending-admin-grid">
+                    <!-- Left: 4 Slots Config -->
+                    <div class="trending-slots-container" style="display: flex; flex-direction: column; gap: 14px;">
+                        <!-- Slot 1 -->
+                        <div class="trending-slot-card is-active-slot" id="slotCard1">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                    <i class="fa-solid fa-1 text-red"></i> SLOT 1 (Primary / Top Cover) *
+                                </span>
+                                <span class="photo-badge photo-badge-cover">FEATURED #1</span>
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label style="font-size: 0.8rem; font-weight: 700;">Select Product from Inventory *</label>
+                                    <select id="tsProduct1" class="form-control" onchange="updateTrendingSlotPreview(1)">
+                                        <option value="">-- Choose Product for Slot 1 --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                    <input type="text" id="tsBadge1" class="form-control" placeholder="Today's Trending Gadget" value="Today's Trending Gadget" oninput="updateTrendingSlotPreview(1)">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Video / Reel Link (Instagram / YouTube)</label>
+                                    <input type="url" id="tsVideo1" class="form-control" placeholder="https://instagram.com/reel/..." value="https://www.instagram.com/reel/DbvZprNiFGD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" oninput="updateTrendingSlotPreview(1)">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Original MRP (Cut-off Price ₹) *</label>
-                            <input type="number" id="npMrp" class="form-control" placeholder="799" required oninput="updateNewProdDiscount()">
+
+                        <!-- Slot 2 -->
+                        <div class="trending-slot-card" id="slotCard2">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                    <i class="fa-solid fa-2 text-red"></i> SLOT 2
+                                </span>
+                                <span class="photo-badge photo-badge-sub">SLOT #2</span>
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                    <select id="tsProduct2" class="form-control" onchange="updateTrendingSlotPreview(2)">
+                                        <option value="">-- [None / Empty] --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                    <input type="text" id="tsBadge2" class="form-control" placeholder="⚡ 65W GaN Fast Charger" oninput="updateTrendingSlotPreview(2)">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                    <input type="url" id="tsVideo2" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(2)">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group" style="justify-content: flex-end;">
-                            <div id="newProdSavingsPill" class="savings-live-pill" style="display: none;">
-                                <i class="fa-solid fa-bolt"></i> <span id="newProdSavingsText">You Save ₹500 (62% OFF)</span>
+
+                        <!-- Slot 3 -->
+                        <div class="trending-slot-card" id="slotCard3">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                    <i class="fa-solid fa-3 text-red"></i> SLOT 3
+                                </span>
+                                <span class="photo-badge photo-badge-sub">SLOT #3</span>
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                    <select id="tsProduct3" class="form-control" onchange="updateTrendingSlotPreview(3)">
+                                        <option value="">-- [None / Empty] --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                    <input type="text" id="tsBadge3" class="form-control" placeholder="⌚ Smart Watch Ultra 2" oninput="updateTrendingSlotPreview(3)">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                    <input type="url" id="tsVideo3" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(3)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slot 4 -->
+                        <div class="trending-slot-card" id="slotCard4">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                    <i class="fa-solid fa-4 text-red"></i> SLOT 4
+                                </span>
+                                <span class="photo-badge photo-badge-sub">SLOT #4</span>
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                    <select id="tsProduct4" class="form-control" onchange="updateTrendingSlotPreview(4)">
+                                        <option value="">-- [None / Empty] --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                    <input type="text" id="tsBadge4" class="form-control" placeholder="🛡️ MagSafe Frosted Case" oninput="updateTrendingSlotPreview(4)">
+                                </div>
+                                <div class="form-group">
+                                    <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                    <input type="url" id="tsVideo4" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(4)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Interactive Auto-Scroll Preview in Admin -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; position: sticky; top: 80px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-size: 0.82rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+                                <i class="fa-solid fa-eye text-red"></i> Live Carousel Preview (Auto-Changes)
+                            </span>
+                            <span id="adminPreviewSlotIndex" style="font-size: 0.75rem; font-weight: 700; background: #e2e8f0; padding: 2px 8px; border-radius: 4px;">
+                                Slot 1 of 4
+                            </span>
+                        </div>
+
+                        <!-- Mock Promo Banner -->
+                        <div class="promo-banner-container" id="adminTrendingMockBanner" style="max-width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+                            <div class="promo-badge" id="mockPromoBadge" style="padding: 8px 10px; font-size: 0.85rem;">
+                                <i class="fa-solid fa-fire text-red"></i> <span id="mockBadgeText">Today's Trending Gadget</span>
+                            </div>
+                            <div class="hero-image-slider" style="aspect-ratio: 4 / 4.2; background: #fafafa; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                                <img id="mockSlideImg" src="images/hero-slider/mini-printer.png" style="width: 100%; height: 100%; object-fit: contain; transition: opacity 0.35s ease;" alt="Preview">
+                            </div>
+                            <div class="promo-product-info" style="padding: 8px 12px 4px;">
+                                <div class="promo-title" id="mockProductTitle" style="font-size: 0.88rem;">Mini Pocket Bluetooth Thermal Printer (Inkless)</div>
+                                <div class="promo-price-row">
+                                    <span class="promo-price" id="mockProductPrice" style="font-size: 1.05rem;">₹1,199</span>
+                                    <span class="promo-mrp" id="mockProductMrp" style="font-size: 0.8rem;">₹1,999</span>
+                                    <span class="promo-discount" id="mockProductDiscount" style="font-size: 0.7rem;">40% OFF</span>
+                                </div>
+                            </div>
+                            <div class="promo-actions" style="padding: 8px 10px; gap: 6px;">
+                                <div class="promo-btn btn-whatsapp" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
+                                    <i class="fa-brands fa-whatsapp"></i> Order Now
+                                </div>
+                                <div class="promo-btn btn-instagram" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
+                                    <i class="fa-brands fa-instagram"></i> Watch Video
+                                </div>
+                            </div>
+                            <div class="promo-dots" id="mockDots" style="padding: 4px 0 8px;">
+                                <!-- Dots rendered dynamically -->
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Badges & Offer Tag Controls -->
-                <div style="margin-top: 18px; padding: 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;">
-                    <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px; color: #0f172a;">
-                        <i class="fa-solid fa-ribbon text-red"></i> Badges &amp; Customer Offer Tags
-                    </h4>
+        <!-- ========================================== -->
+        <!-- TAB 3: ADD NEW PRODUCT FORM               -->
+        <!-- ========================================== -->
+        <div id="tab-add-product" class="admin-tab-section">
+            <div class="settings-card">
+                <h3><i class="fa-solid fa-circle-plus text-red"></i> Add New Product / Gadget</h3>
+                <form id="newProductForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Badge Ribbon Preset</label>
-                            <select id="npBadgeSelect" class="form-control" onchange="handleBadgeSelectChange('np')">
-                                <option value="HOT DEAL">🔥 HOT DEAL (Red)</option>
-                                <option value="BESTSELLER">⭐ BESTSELLER (Blue)</option>
-                                <option value="TRENDING">🚀 TRENDING (Purple)</option>
-                                <option value="LIMITED STOCK">⏳ LIMITED STOCK (Orange)</option>
-                                <option value="NEW ARRIVAL">✨ NEW ARRIVAL (Green)</option>
-                                <option value="FESTIVE OFFER">🎁 FESTIVE OFFER (Red/Gold)</option>
-                                <option value="SPECIAL OFFER">🏷️ SPECIAL OFFER (Pink)</option>
-                                <option value="CUSTOM">✍️ Custom Text Badge...</option>
-                                <option value="">None</option>
+                            <label>Product Title *</label>
+                            <input type="text" id="npTitle" class="form-control" placeholder="e.g. 65W GaN Dual-Port Fast Charger" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select id="npCategory" class="form-control" required>
+                                <option value="Cases & Covers">Cases & Covers</option>
+                                <option value="Fast Chargers">Fast Chargers</option>
+                                <option value="Screen Protectors">Screen Protectors</option>
+                                <option value="Audio & Speakers">Audio & Speakers</option>
+                                <option value="Smart Gadgets">Smart Gadgets</option>
+                                <option value="Holders & Stands">Holders & Stands</option>
                             </select>
                         </div>
-                        <div class="form-group" id="npCustomBadgeGroup" style="display: none;">
-                            <label>Type Custom Badge Text</label>
-                            <input type="text" id="npCustomBadge" class="form-control" placeholder="e.g. DIWALI SPECIAL / 50% OFF" oninput="updateBadgePreview('np')">
+                        <div class="form-group">
+                            <label>Brand Name</label>
+                            <input type="text" id="npBrand" class="form-control" placeholder="e.g. Apple / boAt / MKart Pro">
                         </div>
                         <div class="form-group">
-                            <label>Special Offer Tag / Caption (Shown on Card)</label>
-                            <input type="text" id="npOfferTag" class="form-control" placeholder="e.g. Free 1.5m Cable / Includes 3 Paper Rolls" oninput="updateBadgePreview('np')">
+                            <label>Stock Status</label>
+                            <select id="npStock" class="form-control">
+                                <option value="in_stock">In Stock (Available at Gajuwaka)</option>
+                                <option value="out_of_stock">Out of Stock</option>
+                            </select>
                         </div>
                     </div>
-                    <div style="margin-top: 12px; display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">Live Preview on Card:</span>
-                        <span id="npBadgePreview" class="preview-badge-chip" style="background: #e60000;">HOT DEAL</span>
-                        <span id="npOfferPreview" class="preview-offer-chip" style="display: none;"><i class="fa-solid fa-gift"></i> <span id="npOfferText"></span></span>
-                    </div>
-                </div>
 
-                <!-- Photos Manager (Upload & Choose Cover Photo) -->
-                <div class="upload-dropzone">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.4rem; color: var(--primary);"></i>
-                    <h4 style="font-size: 1.05rem; font-weight: 800; margin-top: 6px;">Product Photos Manager (Up to 6 Photos)</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-                        Upload photos directly to Supabase. You have full control to <strong>set any photo as the 1st Cover image</strong>, reorder them, or remove them.
-                    </p>
-                    
-                    <input type="file" id="newProdFileInput" accept="image/*" multiple style="display: none;">
-                    <input type="file" id="newProdCameraInput" accept="image/*" capture="environment" style="display: none;">
-                    
-                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                        <button type="button" class="btn btn-primary" onclick="document.getElementById('newProdFileInput').click()">
-                            <i class="fa-solid fa-images"></i> Phone Gallery / Files
-                        </button>
-                        <button type="button" class="btn btn-outline" onclick="document.getElementById('newProdCameraInput').click()" style="border-color: #e60000; color: #e60000; background: #fff5f5;">
-                            <i class="fa-solid fa-camera"></i> Take Photo with Camera
-                        </button>
-                        <button type="button" class="btn btn-outline" id="newProdClearPhotosBtn" onclick="clearNewPhotos()" style="display: none;">
-                            <i class="fa-solid fa-trash-can"></i> Clear All Photos
-                        </button>
-                    </div>
-
-                    <div id="newProdUploadProgress" style="display: none; margin-top: 12px; font-weight: 700; color: var(--primary);">
-                        <i class="fa-solid fa-spinner fa-spin"></i> <span id="newProdProgressText">Uploading...</span>
-                    </div>
-
-                    <!-- Photo Cards Grid -->
-                    <div id="newProdPhotosGrid" class="photo-cards-grid">
-                        <div style="grid-column: 1 / -1; padding: 18px; color: #94a3b8; font-size: 0.85rem;">
-                            No photos uploaded yet. Click "Upload Photos" above.
+                    <!-- Price & Discount Control Grid -->
+                    <div style="margin-top: 18px; padding: 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px; color: #0f172a;">
+                            <i class="fa-solid fa-tags text-red"></i> Price, MRP &amp; Discount Controls
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Offer Price (Selling Price ₹) *</label>
+                                <input type="number" id="npPrice" class="form-control" placeholder="299" required oninput="updateNewProdDiscount()">
+                            </div>
+                            <div class="form-group">
+                                <label>Original MRP (Cut-off Price ₹) *</label>
+                                <input type="number" id="npMrp" class="form-control" placeholder="799" required oninput="updateNewProdDiscount()">
+                            </div>
+                            <div class="form-group" style="justify-content: flex-end;">
+                                <div id="newProdSavingsPill" class="savings-live-pill" style="display: none;">
+                                    <i class="fa-solid fa-bolt"></i> <span id="newProdSavingsText">You Save ₹500 (62% OFF)</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group" style="margin-top: 18px;">
-                    <label>Key Features / Highlights (comma-separated)</label>
-                    <input type="text" id="npHighlights" class="form-control" placeholder="Fast 65W GaN, Overheat protection, 6 Months store warranty">
-                </div>
+                    <!-- Badges & Offer Tag Controls -->
+                    <div style="margin-top: 18px; padding: 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 12px; color: #0f172a;">
+                            <i class="fa-solid fa-ribbon text-red"></i> Badges &amp; Customer Offer Tags
+                        </h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Badge Ribbon Preset</label>
+                                <select id="npBadgeSelect" class="form-control" onchange="handleBadgeSelectChange('np')">
+                                    <option value="HOT DEAL">🔥 HOT DEAL (Red)</option>
+                                    <option value="BESTSELLER">⭐ BESTSELLER (Blue)</option>
+                                    <option value="TRENDING">🚀 TRENDING (Purple)</option>
+                                    <option value="LIMITED STOCK">⏳ LIMITED STOCK (Orange)</option>
+                                    <option value="NEW ARRIVAL">✨ NEW ARRIVAL (Green)</option>
+                                    <option value="FESTIVE OFFER">🎁 FESTIVE OFFER (Red/Gold)</option>
+                                    <option value="SPECIAL OFFER">🏷️ SPECIAL OFFER (Pink)</option>
+                                    <option value="CUSTOM">✍️ Custom Text Badge...</option>
+                                    <option value="">None</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="npCustomBadgeGroup" style="display: none;">
+                                <label>Type Custom Badge Text</label>
+                                <input type="text" id="npCustomBadge" class="form-control" placeholder="e.g. DIWALI SPECIAL / 50% OFF" oninput="updateBadgePreview('np')">
+                            </div>
+                            <div class="form-group">
+                                <label>Special Offer Tag / Caption (Shown on Card)</label>
+                                <input type="text" id="npOfferTag" class="form-control" placeholder="e.g. Free 1.5m Cable / Includes 3 Paper Rolls" oninput="updateBadgePreview('np')">
+                            </div>
+                        </div>
+                        <div style="margin-top: 12px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">Live Preview on Card:</span>
+                            <span id="npBadgePreview" class="preview-badge-chip" style="background: #e60000;">HOT DEAL</span>
+                            <span id="npOfferPreview" class="preview-offer-chip" style="display: none;"><i class="fa-solid fa-gift"></i> <span id="npOfferText"></span></span>
+                        </div>
+                    </div>
 
-                <div class="form-group" style="margin-top: 14px;">
-                    <label>Full Product Description</label>
-                    <textarea id="npDescription" class="form-control" rows="2" placeholder="Describe the product details, build quality, and use cases..."></textarea>
-                </div>
+                    <!-- Photos Manager (Upload & Choose Cover Photo) -->
+                    <div class="upload-dropzone">
+                        <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.4rem; color: var(--primary);"></i>
+                        <h4 style="font-size: 1.05rem; font-weight: 800; margin-top: 6px;">Product Photos Manager (Up to 6 Photos)</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                            Upload photos directly to Supabase. You have full control to <strong>set any photo as the 1st Cover image</strong>, reorder them, or remove them.
+                        </p>
+                        
+                        <input type="file" id="newProdFileInput" accept="image/*" multiple style="display: none;">
+                        <input type="file" id="newProdCameraInput" accept="image/*" capture="environment" style="display: none;">
+                        
+                        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-primary" onclick="document.getElementById('newProdFileInput').click()">
+                                <i class="fa-solid fa-images"></i> Phone Gallery / Files
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="document.getElementById('newProdCameraInput').click()" style="border-color: #e60000; color: #e60000; background: #fff5f5;">
+                                <i class="fa-solid fa-camera"></i> Take Photo with Camera
+                            </button>
+                            <button type="button" class="btn btn-outline" id="newProdClearPhotosBtn" onclick="clearNewPhotos()" style="display: none;">
+                                <i class="fa-solid fa-trash-can"></i> Clear All Photos
+                            </button>
+                        </div>
 
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 12px 24px; font-size: 1rem;">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> Save &amp; Publish Product to Supabase
-                </button>
-            </form>
+                        <div id="newProdUploadProgress" style="display: none; margin-top: 12px; font-weight: 700; color: var(--primary);">
+                            <i class="fa-solid fa-spinner fa-spin"></i> <span id="newProdProgressText">Uploading...</span>
+                        </div>
+
+                        <!-- Photo Cards Grid -->
+                        <div id="newProdPhotosGrid" class="photo-cards-grid">
+                            <div style="grid-column: 1 / -1; padding: 18px; color: #94a3b8; font-size: 0.85rem;">
+                                No photos uploaded yet. Click "Upload Photos" above.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 18px;">
+                        <label>Key Features / Highlights (comma-separated)</label>
+                        <input type="text" id="npHighlights" class="form-control" placeholder="Fast 65W GaN, Overheat protection, 6 Months store warranty">
+                    </div>
+
+                    <div class="form-group" style="margin-top: 14px;">
+                        <label>Full Product Description</label>
+                        <textarea id="npDescription" class="form-control" rows="2" placeholder="Describe the product details, build quality, and use cases..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 12px 24px; font-size: 1rem;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Save &amp; Publish Product to Supabase
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <!-- Products Table -->
-        <div class="products-table-card">
-            <div class="table-toolbar">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <h3>Live Store Inventory (<span id="totalCount">0</span> items)</h3>
+        <!-- ========================================== -->
+        <!-- TAB 4: SETTINGS, SUPABASE & PIN SECURITY  -->
+        <!-- ========================================== -->
+        <div id="tab-settings" class="admin-tab-section">
+            <div class="settings-card">
+                <h3><i class="fa-solid fa-database text-red"></i> Live Supabase Cloud Connection</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Supabase Project URL</label>
+                        <input type="text" id="sbUrl" class="form-control" value="https://qryizrgkzamytqyebmuy.supabase.co">
+                    </div>
+                    <div class="form-group">
+                        <label>Supabase Key (Publishable or Service Key)</label>
+                        <input type="password" id="sbKey" class="form-control" value="sb_publishable_TYj0vqJF7UYuWS08CwONsQ_C17O8oxD">
+                    </div>
                 </div>
-                <input type="text" id="tableSearch" class="form-control" style="max-width: 280px;" placeholder="Search products...">
+                <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button id="refreshBtn" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> Refresh from Supabase</button>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Cover Photo</th>
-                            <th>Product &amp; Category</th>
-                            <th>Badge &amp; Offer</th>
-                            <th>Offer Price (₹)</th>
-                            <th>MRP (₹)</th>
-                            <th>Stock</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventoryTableBody">
-                        <!-- Populated dynamically via JavaScript -->
-                    </tbody>
-                </table>
+
+            <!-- PIN & Security Settings Card -->
+            <div class="settings-card">
+                <h3><i class="fa-solid fa-shield-halved text-red"></i> Store Admin PIN Security</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px;">
+                    Control access to your store inventory and direct phone photo uploads. Default PIN is <strong>8855</strong>.
+                </p>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Current Store PIN</label>
+                        <input type="password" id="currentPinSetting" class="form-control" maxlength="4" placeholder="8855">
+                    </div>
+                    <div class="form-group">
+                        <label>New 4-digit PIN</label>
+                        <input type="password" id="newPinSetting" class="form-control" maxlength="4" placeholder="e.g. 1234">
+                    </div>
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-outline" onclick="changeAdminPin()"><i class="fa-solid fa-key"></i> Update PIN</button>
+                    <button type="button" class="btn btn-outline" onclick="lockAdminSession()" style="border-color: #fecdd3; color: #e60000;"><i class="fa-solid fa-lock"></i> Lock Screen Now</button>
+                </div>
+            </div>
+
+            <!-- Mobile Quick Actions & Export -->
+            <div class="settings-card">
+                <h3><i class="fa-solid fa-toolbox text-red"></i> Quick Tools &amp; Data Backup</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('sitemapBtn').click()">
+                        <i class="fa-solid fa-sitemap"></i> Download Google Sitemap (sitemap.xml)
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('backupBtn').click()">
+                        <i class="fa-solid fa-download"></i> Download Products JSON Backup
+                    </button>
+                    <a href="http://localhost:3000" target="_blank" class="btn btn-outline">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Customer Store
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1214,11 +1517,12 @@
         }
 
         // ====================================================================
-        // TABLE RENDERING
+        // TABLE RENDERING (Desktop Table & Mobile App Cards)
         // ====================================================================
         function renderTable(filter = '') {
             const tbody = document.getElementById('inventoryTableBody');
             const totalCount = document.getElementById('totalCount');
+            const navBadge = document.getElementById('navProdCount');
             
             const filtered = products.filter(p => 
                 (p.title || '').toLowerCase().includes(filter.toLowerCase()) || 
@@ -1226,55 +1530,111 @@
                 (p.badge || '').toLowerCase().includes(filter.toLowerCase())
             );
 
-            totalCount.textContent = filtered.length;
-            tbody.innerHTML = filtered.map((p) => {
-                const coverImg = (Array.isArray(p.images) && p.images.length > 0) ? p.images[0] : (p.image || 'images/category-cases-v2.png');
-                const imgCount = Array.isArray(p.images) ? p.images.length : (p.image ? 1 : 0);
+            if (totalCount) totalCount.textContent = filtered.length;
+            if (navBadge) navBadge.textContent = filtered.length;
 
-                return `
-                <tr>
-                    <td>
-                        <div style="position: relative; display: inline-block;">
-                            <img src="${coverImg}" class="prod-thumb" alt="${p.title}">
-                            ${imgCount > 1 ? `<span style="position: absolute; bottom: -4px; right: -4px; background: #0f172a; color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; font-weight: 700;">${imgCount} imgs</span>` : ''}
+            // Render Desktop Table
+            if (tbody) {
+                tbody.innerHTML = filtered.map((p) => {
+                    const coverImg = (Array.isArray(p.images) && p.images.length > 0) ? p.images[0] : (p.image || 'images/category-cases-v2.png');
+                    const imgCount = Array.isArray(p.images) ? p.images.length : (p.image ? 1 : 0);
+
+                    return `
+                    <tr>
+                        <td>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="${coverImg}" class="prod-thumb" alt="${p.title}">
+                                ${imgCount > 1 ? `<span style="position: absolute; bottom: -4px; right: -4px; background: #0f172a; color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; font-weight: 700;">${imgCount} imgs</span>` : ''}
+                            </div>
+                        </td>
+                        <td>
+                            <strong>${p.title}</strong><br>
+                            <small style="color: #64748b;">${p.category} | ${p.brand || 'MKart'}</small>
+                        </td>
+                        <td>
+                            ${(p.specs && p.specs.is_trending) ? `<span class="photo-badge" style="background: #e60000; color: #fff; display:inline-block; margin-bottom: 2px;"><i class="fa-solid fa-fire"></i> Trending #${p.specs.trending_rank || 1}</span><br>` : ''}
+                            ${p.badge ? `<span class="photo-badge photo-badge-cover" style="display:inline-block; margin-bottom: 2px;">${p.badge}</span><br>` : ''}
+                            ${p.offer_tag ? `<small style="color: #e60000; font-weight:700;"><i class="fa-solid fa-gift"></i> ${p.offer_tag}</small>` : ''}
+                        </td>
+                        <td>
+                            <strong style="font-size: 1.05rem;">₹${Number(p.selling_price).toLocaleString('en-IN')}</strong>
+                        </td>
+                        <td>
+                            <span style="color: #94a3b8; text-decoration: line-through;">₹${Number(p.mrp || 0).toLocaleString('en-IN')}</span>
+                            <br><small style="color: #16a34a; font-weight: 700;">${p.discount_percent || 0}% OFF</small>
+                        </td>
+                        <td>
+                            <span class="photo-badge ${p.stock_status === 'in_stock' ? 'photo-badge-cover' : 'photo-badge-sub'}" style="background: ${p.stock_status === 'in_stock' ? '#dcfce7' : '#fee2e2'}; color: ${p.stock_status === 'in_stock' ? '#15803d' : '#b91c1c'};">
+                                ${p.stock_status === 'in_stock' ? 'In Stock' : 'Out of Stock'}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 6px;">
+                                <a href="product.html?id=${encodeURIComponent(p.id)}" target="_blank" class="btn btn-outline btn-sm" style="text-decoration:none;" title="Open live Flipkart-style product page in new tab">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+                                </a>
+                                <button class="btn btn-outline btn-sm" onclick="openEditModal('${p.id}')" title="Edit full product details & photos">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')" title="Delete product">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;}).join('');
+            }
+
+            // Render Mobile Cards View
+            const mobList = document.getElementById('mobileInventoryList');
+            if (mobList) {
+                if (filtered.length === 0) {
+                    mobList.innerHTML = `<div style="text-align:center; padding:30px 10px; color:#94a3b8; font-size:0.9rem;">No products found matching your search.</div>`;
+                } else {
+                    mobList.innerHTML = filtered.map(p => {
+                        const coverImg = (Array.isArray(p.images) && p.images.length > 0) ? p.images[0] : (p.image || 'images/category-cases-v2.png');
+                        const imgCount = Array.isArray(p.images) ? p.images.length : (p.image ? 1 : 0);
+                        const isTrending = p.specs && p.specs.is_trending;
+                        const inStock = p.stock_status === 'in_stock';
+                        return `
+                        <div class="mobile-prod-card">
+                            <div class="mobile-card-thumb-box">
+                                <img src="${coverImg}" class="mobile-card-thumb" alt="${p.title}" loading="lazy">
+                                ${imgCount > 1 ? `<span class="mobile-img-count">${imgCount}📷</span>` : ''}
+                            </div>
+                            <div class="mobile-card-info">
+                                <div class="mobile-card-chips">
+                                    ${isTrending ? `<span class="mobile-chip mobile-chip-trending"><i class="fa-solid fa-fire"></i> #${p.specs.trending_rank || 1}</span>` : ''}
+                                    <span class="mobile-chip mobile-chip-stock ${inStock ? 'in-stock' : 'out-of-stock'}">
+                                        ${inStock ? 'In Stock' : 'Out of Stock'}
+                                    </span>
+                                    ${p.badge ? `<span class="mobile-chip mobile-chip-badge">${p.badge}</span>` : ''}
+                                </div>
+                                <div class="mobile-card-title">${p.title}</div>
+                                <div class="mobile-card-sub">${p.category} | ${p.brand || 'MKart'}</div>
+                                <div class="mobile-card-prices">
+                                    <span class="mobile-card-price">₹${Number(p.selling_price).toLocaleString('en-IN')}</span>
+                                    <span class="mobile-card-mrp">₹${Number(p.mrp || 0).toLocaleString('en-IN')}</span>
+                                    <span class="mobile-card-discount">${p.discount_percent || 0}% OFF</span>
+                                </div>
+                                ${p.offer_tag ? `<div style="font-size:0.68rem; color:#e60000; font-weight:700; margin-top:2px;"><i class="fa-solid fa-gift"></i> ${p.offer_tag}</div>` : ''}
+                            </div>
+                            <div class="mobile-card-actions">
+                                <a href="product.html?id=${encodeURIComponent(p.id)}" target="_blank" class="mobile-btn-action" title="View in Store">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                                <button type="button" class="mobile-btn-action edit-btn" onclick="openEditModal('${p.id}')" title="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button type="button" class="mobile-btn-action del-btn" onclick="deleteProduct('${p.id}')" title="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
-                    </td>
-                    <td>
-                        <strong>${p.title}</strong><br>
-                        <small style="color: #64748b;">${p.category} | ${p.brand || 'MKart'}</small>
-                    </td>
-                    <td>
-                        ${(p.specs && p.specs.is_trending) ? `<span class="photo-badge" style="background: #e60000; color: #fff; display:inline-block; margin-bottom: 2px;"><i class="fa-solid fa-fire"></i> Trending #${p.specs.trending_rank || 1}</span><br>` : ''}
-                        ${p.badge ? `<span class="photo-badge photo-badge-cover" style="display:inline-block; margin-bottom: 2px;">${p.badge}</span><br>` : ''}
-                        ${p.offer_tag ? `<small style="color: #e60000; font-weight:700;"><i class="fa-solid fa-gift"></i> ${p.offer_tag}</small>` : ''}
-                    </td>
-                    <td>
-                        <strong style="font-size: 1.05rem;">₹${Number(p.selling_price).toLocaleString('en-IN')}</strong>
-                    </td>
-                    <td>
-                        <span style="color: #94a3b8; text-decoration: line-through;">₹${Number(p.mrp || 0).toLocaleString('en-IN')}</span>
-                        <br><small style="color: #16a34a; font-weight: 700;">${p.discount_percent || 0}% OFF</small>
-                    </td>
-                    <td>
-                        <span class="photo-badge ${p.stock_status === 'in_stock' ? 'photo-badge-cover' : 'photo-badge-sub'}" style="background: ${p.stock_status === 'in_stock' ? '#dcfce7' : '#fee2e2'}; color: ${p.stock_status === 'in_stock' ? '#15803d' : '#b91c1c'};">
-                            ${p.stock_status === 'in_stock' ? 'In Stock' : 'Out of Stock'}
-                        </span>
-                    </td>
-                    <td>
-                        <div style="display: flex; gap: 6px;">
-                            <a href="product.html?id=${encodeURIComponent(p.id)}" target="_blank" class="btn btn-outline btn-sm" style="text-decoration:none;" title="Open live Flipkart-style product page in new tab">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> View
-                            </a>
-                            <button class="btn btn-outline btn-sm" onclick="openEditModal('${p.id}')" title="Edit full product details & photos">
-                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')" title="Delete product">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `;}).join('');
+                        `;
+                    }).join('');
+                }
+            }
         }
 
         // ====================================================================
@@ -2207,6 +2567,100 @@
             showToast('Locked Admin Panel');
         }
 
+        function changeAdminPin() {
+            const currentPin = getStoredPin();
+            const enteredCurrent = (document.getElementById('currentPinSetting').value || '').trim();
+            const newPin = (document.getElementById('newPinSetting').value || '').trim();
+
+            if (enteredCurrent !== currentPin) {
+                showToast('Error: Current PIN does not match!');
+                return;
+            }
+            if (!/^\d{4}$/.test(newPin)) {
+                showToast('Error: New PIN must be exactly 4 digits (0-9)!');
+                return;
+            }
+            localStorage.setItem('mkart_admin_pin', newPin);
+            document.getElementById('currentPinSetting').value = '';
+            document.getElementById('newPinSetting').value = '';
+            showToast(`Store PIN updated successfully to ${newPin}!`);
+        }
+
+        // ====================================================================
+        // MOBILE APP TAB SWITCHING
+        // ====================================================================
+        function switchMobileTab(tabKey) {
+            const tabs = ['inventory', 'trending', 'add-product', 'settings'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.remove('active-tab');
+            });
+
+            const target = document.getElementById(`tab-${tabKey}`);
+            if (target) {
+                target.classList.add('active-tab');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update bottom navigation active class
+            document.querySelectorAll('.mobile-nav-item').forEach(b => b.classList.remove('active'));
+            const activeMap = {
+                'inventory': 'navItemInventory',
+                'trending': 'navItemTrending',
+                'add-product': 'navItemAdd',
+                'settings': 'navItemSettings'
+            };
+            const activeBtn = document.getElementById(activeMap[tabKey]);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        // ====================================================================
+        // PWA SERVICE WORKER & APP INSTALL PROMPT
+        // ====================================================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('MKart Admin Service Worker registered:', reg.scope);
+                }).catch(err => {
+                    console.log('SW registration note:', err);
+                });
+            });
+        }
+
+        let deferredInstallPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            const btn = document.getElementById('mobileInstallAppBtn');
+            if (btn) btn.style.display = 'inline-flex';
+        });
+
+        function installAdminApp() {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                deferredInstallPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('MKart Admin App installed successfully!');
+                    }
+                    deferredInstallPrompt = null;
+                });
+            } else {
+                const modal = document.getElementById('installGuideModal');
+                if (modal) {
+                    if (typeof modal.showModal === 'function') modal.showModal();
+                    else modal.setAttribute('open', 'true');
+                }
+            }
+        }
+
+        function closeInstallGuide() {
+            const modal = document.getElementById('installGuideModal');
+            if (modal) {
+                if (typeof modal.close === 'function') modal.close();
+                else modal.removeAttribute('open');
+            }
+        }
+
         // Support physical keyboard
         window.addEventListener('keydown', (e) => {
             const overlay = document.getElementById('pinLockOverlay');
@@ -2223,5 +2677,64 @@
         updateNewProdDiscount();
         updateBadgePreview('np');
     </script>
+
+    <!-- PWA Install Guide Modal -->
+    <dialog id="installGuideModal" class="admin-modal">
+        <div class="modal-header">
+            <h3 style="font-size: 1.15rem; font-weight: 800;"><i class="fa-solid fa-mobile-screen-button text-red"></i> Install MKart Admin App</h3>
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeInstallGuide()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="modal-body" style="font-size: 0.9rem; line-height: 1.6; color: #334155;">
+            <p style="margin-bottom: 12px;">Install MKart Admin on your phone's home screen for quick 1-tap access with full camera and offline support!</p>
+            
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
+                <strong style="color: #0f172a; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <i class="fa-brands fa-android text-red" style="font-size: 1.1rem;"></i> Android (Google Chrome)
+                </strong>
+                <ol style="margin-left: 18px; margin-bottom: 0;">
+                    <li>Tap the <strong>three dots menu (⋮)</strong> at top right of Chrome.</li>
+                    <li>Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.</li>
+                    <li>Tap <strong>Install</strong> to place the MKart Admin icon on your phone!</li>
+                </ol>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;">
+                <strong style="color: #0f172a; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <i class="fa-brands fa-apple text-red" style="font-size: 1.1rem;"></i> iPhone / iPad (Safari)
+                </strong>
+                <ol style="margin-left: 18px; margin-bottom: 0;">
+                    <li>Tap the <strong>Share button (<i class="fa-solid fa-arrow-up-from-bracket"></i>)</strong> at the bottom of Safari.</li>
+                    <li>Scroll down and tap <strong>"Add to Home Screen"</strong>.</li>
+                    <li>Tap <strong>Add</strong> at top right. MKart Admin is now on your iPhone!</li>
+                </ol>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="closeInstallGuide()">Got it</button>
+        </div>
+    </dialog>
+
+    <!-- Mobile Bottom Navigation Bar (App Bar) -->
+    <nav class="mobile-bottom-nav">
+        <button type="button" class="mobile-nav-item active" id="navItemInventory" onclick="switchMobileTab('inventory')">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Inventory</span>
+            <span class="nav-count-badge" id="navProdCount">0</span>
+        </button>
+        <button type="button" class="mobile-nav-item" id="navItemTrending" onclick="switchMobileTab('trending')">
+            <i class="fa-solid fa-fire"></i>
+            <span>Trending</span>
+        </button>
+        <button type="button" class="mobile-nav-item" id="navItemAdd" onclick="switchMobileTab('add-product')">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span>Add New</span>
+        </button>
+        <button type="button" class="mobile-nav-item" id="navItemSettings" onclick="switchMobileTab('settings')">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </button>
+    </nav>
 </body>
 </html>

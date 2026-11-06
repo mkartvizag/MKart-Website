@@ -112,4 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 4000); // Change image every 4 seconds
         }
     }
+
+    // 7. Register Service Worker for PWA support
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+            console.log('SW registration note:', err);
+        });
+    }
 });
