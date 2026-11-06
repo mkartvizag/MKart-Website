@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    <!-- Homepage -->
     <url>
         <loc>https://www.mkartvizag.in/</loc>
-        <lastmod>2026-07-31</lastmod>
-        <changefreq>weekly</changefreq>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>daily</changefreq>
         <priority>1.0</priority>
+    </url>
+    <!-- Deals & Products Section -->
+    <url>
+        <loc>https://www.mkartvizag.in/#products</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <!-- Store Catalog -->
+    <url>
+        <loc>https://www.mkartvizag.in/#catalog</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- Product: 65W GaN Dual-Port Ultra Fast Wall Charger -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-ch-02&amp;name=65w-gan-dual-port-fast-charger</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/category-charging-v2.png</image:loc>
+            <image:title>65W GaN Dual-Port Ultra Fast Wall Charger</image:title>
+            <image:caption>Buy 65W GaN Dual-Port Ultra Fast Wall Charger at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: 9H Privacy Matte Anti-Peeping Tempered Glass -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-sg-03&amp;name=9h-privacy-matte-tempered-glass</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/screen_guards.png</image:loc>
+            <image:title>9H Privacy Matte Anti-Peeping Tempered Glass</image:title>
+            <image:caption>Buy 9H Privacy Matte Anti-Peeping Tempered Glass at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: BassPro Wireless Neckband with 40H Playtime -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-au-04&amp;name=basspro-wireless-neckband-40h</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/category-audio-v2.png</image:loc>
+            <image:title>BassPro Wireless Neckband with 40H Playtime</image:title>
+            <image:caption>Buy BassPro Wireless Neckband with 40H Playtime at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: Smart Watch Ultra 2 with Bluetooth HD Calling -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-sw-06&amp;name=smart-watch-ultra-2-bluetooth-calling</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/category-smart-v2.png</image:loc>
+            <image:title>Smart Watch Ultra 2 with Bluetooth HD Calling</image:title>
+            <image:caption>Buy Smart Watch Ultra 2 with Bluetooth HD Calling at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: Magnetic 360° Rotating Car Dashboard Mount -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-hd-07&amp;name=magnetic-360-car-dashboard-mount</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/category-holders-v2.png</image:loc>
+            <image:title>Magnetic 360° Rotating Car Dashboard Mount</image:title>
+            <image:caption>Buy Magnetic 360° Rotating Car Dashboard Mount at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: 100W PD Braided Fast Charging Type-C to Type-C (1.5m) -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-cb-08&amp;name=100w-pd-braided-type-c-cable</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/chargers.png</image:loc>
+            <image:title>100W PD Braided Fast Charging Type-C to Type-C (1.5m)</image:title>
+            <image:caption>Buy 100W PD Braided Fast Charging Type-C to Type-C (1.5m) at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: Mini Pocket Bluetooth Thermal Printer (Inkless) -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-gd-05&amp;name=mini-pocket-thermal-printer-inkless</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/hero-slider/mini-printer.png</image:loc>
+            <image:title>Mini Pocket Bluetooth Thermal Printer (Inkless)</image:title>
+            <image:caption>Buy Mini Pocket Bluetooth Thermal Printer (Inkless) at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
+    </url>
+    <!-- Product: MagSafe Frosted Matte Shockproof Case (Updated) -->
+    <url>
+        <loc>https://www.mkartvizag.in/product.html?id=mk-cs-01&amp;name=magsafe-frosted-matte-case</loc>
+        <lastmod>2026-11-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+        <image:image>
+            <image:loc>https://www.mkartvizag.in/images/category-cases-v2.png</image:loc>
+            <image:title>MagSafe Frosted Matte Shockproof Case (Updated)</image:title>
+            <image:caption>Buy MagSafe Frosted Matte Shockproof Case (Updated) at MKart Gajuwaka Vizag</image:caption>
+        </image:image>
     </url>
 </urlset>

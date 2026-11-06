@@ -72,6 +72,7 @@
             <nav class="nav-menu">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#products" class="nav-link">Deals &amp; Products</a></li>
                     <li><a href="#catalog" class="nav-link">Catalog</a></li>
                     <li><a href="#visit" class="nav-link">Visit Us</a></li>
                 </ul>
@@ -103,7 +104,7 @@
                 <h1 class="hero-title">Mobile Accessories in <span class="text-red rotating-word" id="rotatingLocation">Gajuwaka</span></h1>
                 <p class="hero-subtitle">Welcome to <strong>MKart Mobile Accessories &amp; Gadgets</strong>! Bulk orders for shops, resellers &amp; distributors — and retail at the lowest prices for everyday customers. Cases, screen guards, chargers, cables &amp; smart gadgets, all under one roof.</p>
                 <div class="hero-cta">
-                    <a href="#catalog" class="btn btn-primary">Shop Retail</a>
+                    <a href="#products" class="btn btn-primary">Shop Retail</a>
                     <a href="https://wa.me/919966258855?text=Hi%20Mkart%2C%20I%27m%20interested%20in%20BULK%2FWHOLESALE%20pricing%20for%20mobile%20accessories" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa-solid fa-boxes-stacked"></i> Bulk / Wholesale Enquiry</a>
                 </div>
                 <div class="hero-stats">
@@ -144,24 +145,71 @@
         </div>
     </section>
 
-    <!-- Instagram Feed Section -->
-    <section class="instagram-feed section">
+    <!-- E-Commerce Products & Deals Section (Flipkart Style) -->
+    <section id="products" class="products-section section">
         <div class="container">
-            <div class="section-header text-center animate-on-scroll" style="margin-bottom: 40px;">
-                <h2 class="section-title">Follow Us on <span class="text-red">Instagram</span></h2>
-                <p class="section-subtitle">Check out our latest arrivals and updates!</p>
+            <div class="section-header text-center animate-on-scroll" style="margin-bottom: 25px;">
+                <div class="badge" style="margin-bottom: 10px;">
+                    <span class="badge-tag"><i class="fa-solid fa-bolt"></i> Live Store Inventory</span>
+                    <span class="badge-highlight"><i class="fa-solid fa-tags"></i> Flipkart-Style Deals</span>
+                </div>
+                <h2 class="section-title">Trending Gadgets &amp; <span class="text-red">Best Deals</span></h2>
+                <p class="section-subtitle">Real-time store prices, genuine quality assurance, and instant 1-click WhatsApp ordering directly from our Gajuwaka store.</p>
             </div>
-            
-            <div class="insta-widget-container" style="width: 100%; overflow: hidden;">
-                <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-                <script src="https://elfsightcdn.com/platform.js" async></script>
-                <div class="elfsight-app-ad319496-9f92-4ed1-a129-7e00736735b1" data-elfsight-app-lazy></div>
+
+            <!-- E-Commerce Controls: Search, Filters, and Sorting -->
+            <div class="fk-controls-wrapper">
+                <div class="fk-search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="productSearchInput" placeholder="Search phone cases, 65W chargers, tempered glass, smartwatches..." aria-label="Search accessories">
+                </div>
+
+                <div class="fk-sort-box">
+                    <label for="productSortSelect"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort By:</label>
+                    <select id="productSortSelect" class="fk-select">
+                        <option value="featured">Featured / Trending</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="discount">Biggest Discount (%)</option>
+                        <option value="rating">Customer Rating</option>
+                    </select>
+                </div>
             </div>
-            
-            <div class="text-center mt-4" style="margin-top: 30px;">
-                <a href="https://instagram.com/mkartvizag" target="_blank" rel="noopener" class="btn btn-outline" style="border-color: #E1306C; color: #E1306C;">
-                    <i class="fa-brands fa-instagram"></i> View @mkartvizag
-                </a>
+
+            <!-- Category Pills Bar -->
+            <div class="fk-categories-bar" role="tablist" aria-label="Product Categories">
+                <button type="button" class="category-pill active" data-category="All" role="tab" aria-selected="true">
+                    <i class="fa-solid fa-border-all"></i> All Items
+                </button>
+                <button type="button" class="category-pill" data-category="Cases & Covers" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-mobile-screen"></i> Cases &amp; Covers
+                </button>
+                <button type="button" class="category-pill" data-category="Fast Chargers" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-bolt-lightning"></i> Fast Chargers
+                </button>
+                <button type="button" class="category-pill" data-category="Screen Protectors" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-shield"></i> Screen Protectors
+                </button>
+                <button type="button" class="category-pill" data-category="Audio & Speakers" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-headphones"></i> Audio &amp; Music
+                </button>
+                <button type="button" class="category-pill" data-category="Smart Gadgets" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-microchip"></i> Smart Gadgets
+                </button>
+                <button type="button" class="category-pill" data-category="Holders & Stands" role="tab" aria-selected="false">
+                    <i class="fa-solid fa-compass"></i> Car &amp; Desk Mounts
+                </button>
+            </div>
+
+            <!-- Products Result Counter -->
+            <div class="fk-results-meta">
+                <span id="productResultsCount" class="results-counter">Showing products</span>
+                <span class="fk-store-tag"><i class="fa-solid fa-truck-fast text-green"></i> Free Store Pickup &amp; Express Delivery in Vizag</span>
+            </div>
+
+            <!-- Products Grid Container (Populated by js/products.js) -->
+            <div id="productsGrid" class="fk-products-grid">
+                <!-- Dynamically injected product cards -->
             </div>
         </div>
     </section>
@@ -406,5 +454,6 @@
 
     <!-- Custom JS -->
     <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
 </body>
 </html>

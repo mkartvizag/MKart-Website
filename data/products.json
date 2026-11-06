@@ -1,0 +1,259 @@
+[
+  {
+    "id": "mk-cs-01",
+    "title": "MagSafe Frosted Matte Shockproof Case",
+    "slug": "magsafe-frosted-matte-case",
+    "category": "Cases & Covers",
+    "brand": "Apple / Samsung / OnePlus",
+    "selling_price": 299,
+    "mrp": 799,
+    "discount_percent": 62,
+    "rating": 4.8,
+    "rating_count": 142,
+    "badge": "BESTSELLER",
+    "stock_status": "in_stock",
+    "image": "images/category-cases-v2.png",
+    "images": [
+      "images/category-cases-v2.png",
+      "images/cases.png",
+      "images/category-cases-v2.png"
+    ],
+    "highlights": [
+      "Strong MagSafe Magnetic Ring for wireless charging & car mounts",
+      "Translucent frosted smoke matte back (Anti-fingerprint)",
+      "Military-grade shockproof corner airbags for drop protection"
+    ],
+    "specs": {
+      "Material": "Rigid Polycarbonate + Flexible Shockproof TPU",
+      "Compatibility": "iPhone 13 to 16 Pro Max / Galaxy S23-S25 / OnePlus",
+      "Bezel Height": "1.2mm raised screen edge & 0.8mm camera ring",
+      "Warranty": "3 Months Replacement against manufacturing defects",
+      "Colors Available": "Matte Smoke Black, Titanium Blue, Deep Emerald"
+    },
+    "description": "Premium tactical protective case engineered for everyday drop security without adding bulk. Features strong magnetic alignment for MagSafe wireless charging, car holders, and card wallets."
+  },
+  {
+    "id": "mk-ch-02",
+    "title": "65W GaN Dual-Port Ultra Fast Wall Charger",
+    "slug": "65w-gan-dual-port-fast-charger",
+    "category": "Fast Chargers",
+    "brand": "MKart Pro",
+    "selling_price": 599,
+    "mrp": 1499,
+    "discount_percent": 60,
+    "rating": 4.9,
+    "rating_count": 218,
+    "badge": "HOT DEAL",
+    "stock_status": "in_stock",
+    "image": "images/category-charging-v2.png",
+    "images": [
+      "images/category-charging-v2.png",
+      "images/chargers.png",
+      "images/category-charging-v2.png"
+    ],
+    "highlights": [
+      "Next-Gen GaN Technology: 50% smaller with higher energy efficiency",
+      "Dual Ports: 1x 65W USB-C Power Delivery + 1x Quick Charge 3.0 USB-A",
+      "Smart Temperature Management & Over-voltage surge protection"
+    ],
+    "specs": {
+      "Total Output": "65W Max Fast Charging",
+      "Port 1 (Type-C)": "5V/3A, 9V/3A, 12V/3A, 15V/3A, 20V/3.25A (65W Max)",
+      "Port 2 (USB-A)": "5V/3A, 9V/2A, 12V/1.5A (18W QC3.0)",
+      "Device Support": "iPhones, Samsung Super Fast Charge, MacBooks, Tablets",
+      "Warranty": "1 Year Replacement Warranty"
+    },
+    "description": "Charge your smartphone from 0% to 70% in just 30 minutes. Powered by Gallium Nitride (GaN) semiconductors for ultra-cool, ultra-compact high-speed power delivery."
+  },
+  {
+    "id": "mk-sg-03",
+    "title": "9H Privacy Matte Anti-Peeping Tempered Glass",
+    "slug": "9h-privacy-matte-tempered-glass",
+    "category": "Screen Protectors",
+    "brand": "ArmorGuard",
+    "selling_price": 149,
+    "mrp": 499,
+    "discount_percent": 70,
+    "rating": 4.7,
+    "rating_count": 95,
+    "badge": "POPULAR",
+    "stock_status": "in_stock",
+    "image": "images/screen_guards.png",
+    "images": [
+      "images/screen_guards.png",
+      "images/category-cases-v2.png"
+    ],
+    "highlights": [
+      "28-degree private viewing angle — blocks side snooping on buses/crowds",
+      "Silky matte anti-glare finish: no sun glare & no fingerprint smudges",
+      "Free precision installation in store at our Gajuwaka branch"
+    ],
+    "specs": {
+      "Hardness Rating": "9H Diamond-level Scratch Resistance",
+      "Coating": "Electrolytic Oleophobic Hydrophobic Coating",
+      "Edge Profile": "2.5D Curved Polished Edges (Zero Sharpness)",
+      "Touch Sensitivity": "100% Native Touch Response (Gaming Friendly)",
+      "Installation": "Bubble-Free Alignment (Done Free In-Store)"
+    },
+    "description": "Keep your banking passwords, private chats, and personal data secure from wandering eyes. Only direct screen viewers see crystal clear display; side views see complete black."
+  },
+  {
+    "id": "mk-au-04",
+    "title": "BassPro Wireless Neckband with 40H Playtime",
+    "slug": "basspro-wireless-neckband-40h",
+    "category": "Audio & Speakers",
+    "brand": "boAt / Noise / Generic",
+    "selling_price": 499,
+    "mrp": 1699,
+    "discount_percent": 70,
+    "rating": 4.6,
+    "rating_count": 180,
+    "badge": "VALUE BUY",
+    "stock_status": "in_stock",
+    "image": "images/category-audio-v2.png",
+    "images": [
+      "images/category-audio-v2.png",
+      "images/category-smart-v2.png"
+    ],
+    "highlights": [
+      "40 Hours continuous playback on a single charge",
+      "ASAP Charge: 10 minutes charging gives 10 hours of music",
+      "Dual Mic Environmental Noise Cancellation (ENC) for clear calling"
+    ],
+    "specs": {
+      "Drivers": "12mm Neodymium Dynamic Bass Boost Drivers",
+      "Bluetooth": "Bluetooth v5.3 (10m range, Low Latency 50ms Gaming Mode)",
+      "Water Resistance": "IPX5 Sweat & Water Resistant",
+      "Controls": "Inline Volume, Track & Voice Assistant Button",
+      "Warranty": "6 Months Replacement"
+    },
+    "description": "Ergonomic silicone neckband designed for all-day workouts, commute, and business calling with thumping deep bass and crystal clear microphones."
+  },
+  {
+    "id": "mk-gd-05",
+    "title": "Mini Pocket Bluetooth Thermal Printer (Inkless)",
+    "slug": "mini-pocket-thermal-printer-inkless",
+    "category": "Smart Gadgets",
+    "brand": "MKart Tech",
+    "selling_price": 899,
+    "mrp": 1999,
+    "discount_percent": 55,
+    "rating": 4.8,
+    "rating_count": 110,
+    "badge": "TRENDING",
+    "stock_status": "in_stock",
+    "image": "images/hero-slider/mini-printer.png",
+    "images": [
+      "images/hero-slider/mini-printer.png",
+      "images/gadgets.png"
+    ],
+    "highlights": [
+      "100% Inkless Thermal Printing — never buy expensive ink or toner!",
+      "Connects to Android and iPhone via Bluetooth in seconds",
+      "Includes 3 free thermal paper rolls in the box"
+    ],
+    "specs": {
+      "Print Technology": "Direct Thermal (203 DPI Black & White)",
+      "Battery": "1200mAh Built-in Rechargeable (USB Type-C Charging)",
+      "Print Width": "57mm Paper Width",
+      "App Functions": "Print Study Notes, To-Do Lists, Photos, Labels, Barcodes",
+      "Dimensions": "8.5 x 8.5 x 4.0 cm (Ultra Compact Pocket Size)"
+    },
+    "description": "The viral pocket printer seen all over Instagram! Perfect for students, shop owners, to-do list lovers, and scrapbooking. No ink required ever."
+  },
+  {
+    "id": "mk-sw-06",
+    "title": "Smart Watch Ultra 2 with Bluetooth HD Calling",
+    "slug": "smart-watch-ultra-2-bluetooth-calling",
+    "category": "Smart Gadgets",
+    "brand": "Ultra Series",
+    "selling_price": 999,
+    "mrp": 2999,
+    "discount_percent": 67,
+    "rating": 4.7,
+    "rating_count": 240,
+    "badge": "HOT DEAL",
+    "stock_status": "in_stock",
+    "image": "images/category-smart-v2.png",
+    "images": [
+      "images/category-smart-v2.png",
+      "images/gadgets.png"
+    ],
+    "highlights": [
+      "Large 2.01-inch HD Infinite Display with smooth touch",
+      "Bluetooth calling directly from your wrist (Built-in mic & speaker)",
+      "Health Tracking: Heart rate, SpO2, sleep monitoring & sports modes"
+    ],
+    "specs": {
+      "Display": "2.01 inch IPS HD Display (320x385 pixels)",
+      "Battery Life": "Up to 4-5 Days on single charge (Wireless Magnetic Charger)",
+      "Build": "Titanium-finish zinc alloy casing + Ocean Silicone Strap",
+      "Compatibility": "Compatible with all Android and iOS devices",
+      "Warranty": "6 Months Store Warranty"
+    },
+    "description": "Full-featured flagship look with Bluetooth dialing, call logs, WhatsApp message previews, customizable watch faces, and daily health tracking."
+  },
+  {
+    "id": "mk-hd-07",
+    "title": "Magnetic 360° Rotating Car Dashboard Mount",
+    "slug": "magnetic-360-car-dashboard-mount",
+    "category": "Holders & Stands",
+    "brand": "GripMax",
+    "selling_price": 249,
+    "mrp": 699,
+    "discount_percent": 64,
+    "rating": 4.6,
+    "rating_count": 88,
+    "badge": "BEST VALUE",
+    "stock_status": "in_stock",
+    "image": "images/category-holders-v2.png",
+    "images": [
+      "images/category-holders-v2.png",
+      "images/gadgets.png"
+    ],
+    "highlights": [
+      "6x N52 Neodymium Magnets — phone won't fall even on speed breakers",
+      "360-degree alloy ball joint for landscape GPS & portrait calling",
+      "Strong industrial 3M VHB adhesive base leaves no residue"
+    ],
+    "specs": {
+      "Body Material": "Aircraft-grade Aluminum Alloy + Soft Silicone Pad",
+      "Mount Placement": "Car Dashboard, Windshield, Office Workstation",
+      "Weight Capacity": "Holds phones up to 450 grams securely",
+      "In The Box": "1x Car Mount, 2x Ultra-thin Metal Plates, 1x Extra 3M Pad"
+    },
+    "description": "Effortlessly mount your smartphone with one hand. Sleek metallic design matches any car interior and provides rock-solid phone stabilization for GPS navigation."
+  },
+  {
+    "id": "mk-cb-08",
+    "title": "100W PD Braided Fast Charging Type-C to Type-C (1.5m)",
+    "slug": "100w-pd-braided-type-c-cable",
+    "category": "Fast Chargers",
+    "brand": "VoltCraft",
+    "selling_price": 199,
+    "mrp": 599,
+    "discount_percent": 66,
+    "rating": 4.9,
+    "rating_count": 315,
+    "badge": "ESSENTIAL",
+    "stock_status": "in_stock",
+    "image": "images/chargers.png",
+    "images": [
+      "images/chargers.png",
+      "images/category-charging-v2.png"
+    ],
+    "highlights": [
+      "Supports 100W Power Delivery (5A Max) for Laptops, iPads & Phones",
+      "Double-braided high-density nylon with 25,000+ bend lifespan",
+      "Built-in E-Marker smart chip prevents battery degradation"
+    ],
+    "specs": {
+      "Connector Type": "USB-C to USB-C (Reversible)",
+      "Max Power": "100W (20V / 5A)",
+      "Cable Length": "1.5 Meters (Perfect length for car & bed)",
+      "Data Transfer Rate": "480 Mbps high-speed data sync",
+      "Warranty": "6 Months Replacement"
+    },
+    "description": "Never struggle with flimsy cables again. Heavy-duty zinc-alloy connectors with reinforced strain relief ensure ultra-fast and reliable charging for all your USB-C devices."
+  }
+]

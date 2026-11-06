@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin-local.html
 
 Sitemap: https://www.mkartvizag.in/sitemap.xml
