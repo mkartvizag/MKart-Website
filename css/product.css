@@ -252,15 +252,9 @@
     color: #ffffff;
 }
 
-/* Flipkart Trust Badges */
+/* Flipkart Trust Badges - Hidden */
 .fk-trust-strip {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 14px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: none !important;
 }
 
 .fk-trust-item {

@@ -352,7 +352,7 @@ Please confirm stock for Gajuwaka store pickup / delivery in Vizag.`);
         const offerTag = (product.specs && product.specs.offer_tag) || product.offer_tag || '';
         const highlights = Array.isArray(product.highlights) && product.highlights.length > 0
             ? product.highlights.slice(0, 3)
-            : ['100% Genuine Quality Guaranteed', 'In-Store Testing & Free Fitting at Gajuwaka', 'Instant Same-Day Local Delivery'];
+            : [];
 
         this.sheetBody.innerHTML = `
             <!-- Top Preview: Image + Meta -->
@@ -394,6 +394,7 @@ Please confirm stock for Gajuwaka store pickup / delivery in Vizag.`);
             ` : ''}
 
             <!-- Key Features / Highlights -->
+            ${highlights.length > 0 ? `
             <ul class="sheet-highlights">
                 ${highlights.map(h => `
                     <li>
@@ -402,6 +403,7 @@ Please confirm stock for Gajuwaka store pickup / delivery in Vizag.`);
                     </li>
                 `).join('')}
             </ul>
+            ` : ''}
 
             <!-- Store Stock Pill -->
             <div style="font-size: 0.8rem; font-weight: 700; color: #16a34a; display: flex; align-items: center; gap: 6px;">

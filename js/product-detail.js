@@ -217,26 +217,6 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                 <i class="fa-solid fa-phone"></i> CALL TO RESERVE
                             </a>
                         </div>
-
-                        <!-- Trust Strip -->
-                        <div class="fk-trust-strip">
-                            <div class="fk-trust-item">
-                                <i class="fa-solid fa-shield-halved"></i>
-                                <span>100% Genuine Mobile Accessories Guaranteed</span>
-                            </div>
-                            <div class="fk-trust-item">
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
-                                <span>Free In-Store Fitting &amp; Alignment at Gajuwaka</span>
-                            </div>
-                            <div class="fk-trust-item">
-                                <i class="fa-solid fa-truck-fast"></i>
-                                <span>Instant Gajuwaka Pickup or Express Vizag Delivery</span>
-                            </div>
-                            <div class="fk-trust-item">
-                                <i class="fa-solid fa-rotate-left"></i>
-                                <span>Store Check &amp; Instant Replacement Support</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Right: Product Information & Specifications -->
