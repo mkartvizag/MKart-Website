@@ -33,6 +33,30 @@ class ProductCatalog {
         this.searchInput = document.getElementById('productSearchInput');
         this.sortSelect = document.getElementById('productSortSelect');
         this.categoryPills = document.querySelectorAll('.category-pill');
+        this.quickSheet = document.getElementById('mobileQuickSheet');
+        this.sheetBody = document.getElementById('sheetDynamicContent');
+
+        const closeSheetBtn = document.getElementById('closeSheetBtn');
+        if (closeSheetBtn && this.quickSheet) {
+            closeSheetBtn.addEventListener('click', () => this.quickSheet.close());
+        }
+
+        // Setup light-dismiss fallback for <dialog closedby="any">
+        if (this.quickSheet && !('closedBy' in HTMLDialogElement.prototype)) {
+            this.quickSheet.addEventListener('click', (event) => {
+                if (event.target !== this.quickSheet) return;
+                const rect = this.quickSheet.getBoundingClientRect();
+                const isContent = (
+                    rect.top <= event.clientY &&
+                    event.clientY <= rect.top + rect.height &&
+                    rect.left <= event.clientX &&
+                    event.clientX <= rect.left + rect.width
+                );
+                if (!isContent) {
+                    this.quickSheet.close();
+                }
+            });
+        }
     }
 
     bindEvents() {
@@ -232,9 +256,9 @@ Please confirm availability for Gajuwaka pickup / delivery.`);
                         ${discount > 0 ? `<span class="fk-discount-pill">${discount}% OFF</span>` : ''}
                     </div>
 
-                    <a href="${detailUrl}" target="_blank" class="fk-card-image-box" style="text-decoration:none; display:flex;" aria-label="View ${product.title}">
+                    <div class="fk-card-image-box" onclick="window.mkartCatalog.handleCardClick('${product.id}', event)" style="cursor: pointer;" aria-label="View ${product.title}">
                         <img src="${cardImg}" alt="${product.title}" loading="lazy">
-                    </a>
+                    </div>
 
                     <div class="fk-card-body">
                         <div class="fk-category-row">
@@ -248,10 +272,8 @@ Please confirm availability for Gajuwaka pickup / delivery.`);
 
                         ${offerTag ? `<div class="fk-offer-tag"><i class="fa-solid fa-gift"></i> ${offerTag}</div>` : ''}
 
-                        <h3 class="fk-product-title">
-                            <a href="${detailUrl}" target="_blank" style="color:inherit; text-decoration:none;">
-                                ${product.title}
-                            </a>
+                        <h3 class="fk-product-title" onclick="window.mkartCatalog.handleCardClick('${product.id}', event)" style="cursor: pointer;">
+                            ${product.title}
                         </h3>
 
                         ${highlightsList ? `<ul class="fk-card-highlights">${highlightsList}</ul>` : ''}
@@ -273,11 +295,11 @@ Please confirm availability for Gajuwaka pickup / delivery.`);
                         </div>
 
                         <div class="fk-card-actions">
-                            <a href="${detailUrl}" target="_blank" class="fk-btn-specs" style="text-decoration:none; text-align:center;">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
-                            </a>
-                            <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-btn-whatsapp">
-                                <i class="fa-brands fa-whatsapp"></i> Buy Now
+                            <button type="button" class="fk-btn-specs" onclick="window.mkartCatalog.openQuickSheet('${product.id}')" title="Quick View">
+                                <i class="fa-solid fa-eye"></i> Quick View
+                            </button>
+                            <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="fk-btn-whatsapp" title="Direct WhatsApp Order">
+                                <i class="fa-brands fa-whatsapp"></i> Buy
                             </a>
                         </div>
                     </div>
@@ -286,8 +308,133 @@ Please confirm availability for Gajuwaka pickup / delivery.`);
         }).join('');
     }
 
+    handleCardClick(productId, event) {
+        if (window.innerWidth <= 768) {
+            if (event) event.preventDefault();
+            this.openQuickSheet(productId);
+        } else {
+            const p = this.products.find(item => item.id === productId);
+            const slug = p ? (p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')) : '';
+            window.open(`product.html?id=${encodeURIComponent(productId)}&name=${encodeURIComponent(slug)}`, '_blank');
+        }
+    }
+
+    openQuickSheet(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product || !this.quickSheet || !this.sheetBody) return;
+
+        this.renderSheetContent(product);
+        this.quickSheet.showModal();
+    }
+
+    renderSheetContent(product) {
+        const discount = product.discount_percent || (product.mrp && product.selling_price ? Math.round(((product.mrp - product.selling_price) / product.mrp) * 100) : 0);
+        const slug = product.slug || (product.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const detailUrl = `product.html?id=${encodeURIComponent(product.id)}&name=${encodeURIComponent(slug)}`;
+        
+        const waText = encodeURIComponent(`Hi MKart Gajuwaka! I would like to order:
+Product: ${product.title} (ID: ${product.id})
+Special Price: ₹${product.selling_price} (MRP: ₹${product.mrp}, ${discount}% OFF)
+Please confirm stock for Gajuwaka store pickup / delivery in Vizag.`);
+
+        let imageList = [];
+        if (product.specs && Array.isArray(product.specs.images) && product.specs.images.length > 0) {
+            imageList = product.specs.images.slice(0, 6);
+        } else if (Array.isArray(product.images) && product.images.length > 0) {
+            imageList = product.images.slice(0, 6);
+        } else if (product.image) {
+            imageList = [product.image];
+        } else {
+            imageList = ['images/category-cases-v2.png'];
+        }
+
+        const mainImage = imageList[0];
+        const offerTag = (product.specs && product.specs.offer_tag) || product.offer_tag || '';
+        const highlights = Array.isArray(product.highlights) && product.highlights.length > 0
+            ? product.highlights.slice(0, 3)
+            : ['100% Genuine Quality Guaranteed', 'In-Store Testing & Free Fitting at Gajuwaka', 'Instant Same-Day Local Delivery'];
+
+        this.sheetBody.innerHTML = `
+            <!-- Top Preview: Image + Meta -->
+            <div class="sheet-top-preview">
+                <div class="sheet-img-box">
+                    <img id="sheetHeroImg" src="${mainImage}" alt="${product.title}">
+                </div>
+                <div class="sheet-top-meta">
+                    <span class="sheet-category-badge">${product.category || 'Accessories'}</span>
+                    <h2 id="sheetProductTitle" class="sheet-product-title">${product.title}</h2>
+                    <div class="sheet-price-row">
+                        <span class="sheet-selling-price">₹${Number(product.selling_price).toLocaleString('en-IN')}</span>
+                        ${product.mrp ? `<span class="sheet-mrp">₹${Number(product.mrp).toLocaleString('en-IN')}</span>` : ''}
+                        ${discount > 0 ? `<span class="sheet-discount-pill">${discount}% OFF</span>` : ''}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-Image Thumbnails (if > 1) -->
+            ${imageList.length > 1 ? `
+                <div class="sheet-thumbs-strip" role="tablist" aria-label="Product photos">
+                    ${imageList.map((img, idx) => `
+                        <button type="button" 
+                                class="sheet-thumb-item ${idx === 0 ? 'active' : ''}" 
+                                onclick="window.mkartCatalog.switchSheetImage('${img}', this)"
+                                aria-label="Photo ${idx + 1}">
+                            <img src="${img}" alt="Thumb ${idx + 1}" loading="lazy">
+                        </button>
+                    `).join('')}
+                </div>
+            ` : ''}
+
+            <!-- Special Offer Tag -->
+            ${offerTag ? `
+                <div class="sheet-offer-box">
+                    <i class="fa-solid fa-gift"></i>
+                    <span><strong>Store Offer:</strong> ${offerTag}</span>
+                </div>
+            ` : ''}
+
+            <!-- Key Features / Highlights -->
+            <ul class="sheet-highlights">
+                ${highlights.map(h => `
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>${h}</span>
+                    </li>
+                `).join('')}
+            </ul>
+
+            <!-- Store Stock Pill -->
+            <div style="font-size: 0.8rem; font-weight: 700; color: #16a34a; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-store"></i> In Stock • Gajuwaka Main Road Shop (Ready for Pickup)
+            </div>
+
+            <!-- Sheet Bottom Action Buttons -->
+            <div class="sheet-actions-wrapper">
+                <a href="https://wa.me/919966258855?text=${waText}" target="_blank" rel="noopener" class="sheet-btn-buy-wa">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> ORDER ON WHATSAPP NOW
+                </a>
+                <div class="sheet-secondary-row">
+                    <a href="tel:+919966258855" class="sheet-btn-call">
+                        <i class="fa-solid fa-phone"></i> Call Store
+                    </a>
+                    <a href="${detailUrl}" target="_blank" class="sheet-btn-view-full">
+                        Full Specs <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+
+    switchSheetImage(imgSrc, btnEl) {
+        const hero = document.getElementById('sheetHeroImg');
+        if (hero) hero.src = imgSrc;
+        const allThumbs = document.querySelectorAll('.sheet-thumb-item');
+        allThumbs.forEach(t => t.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+    }
+
     openModal(productId) {
-        window.open(`product.html?id=${encodeURIComponent(productId)}`, '_blank');
+        this.openQuickSheet(productId);
     }
 }
 

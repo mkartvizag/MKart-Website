@@ -2183,6 +2183,484 @@ dialog.fk-dialog::backdrop {
     }
 
     .fk-card-actions {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+}
+
+/* ============================================================================
+   MOBILE OPTION A: SLIDE-UP BOTTOM SHEET & 2-COLUMN APP-STYLE GRID
+   ============================================================================ */
+
+/* Bottom Sheet Dialog */
+dialog.mobile-bottom-sheet {
+    border: none;
+    padding: 0;
+    margin: auto auto 0 auto;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+    background: #ffffff;
+    overscroll-behavior: contain;
+    animation: sheetSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sheetSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+dialog.mobile-bottom-sheet::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(3px);
+}
+
+.sheet-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    position: relative;
+}
+
+.sheet-drag-bar {
+    position: relative;
+    padding: 12px 16px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sheet-drag-handle {
+    width: 44px;
+    height: 5px;
+    border-radius: 99px;
+    background: #cbd5e1;
+}
+
+.sheet-close-btn {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sheet-close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.sheet-body {
+    padding: 16px 20px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Sheet Top Row: Hero Image & Key Meta */
+.sheet-top-preview {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.sheet-img-box {
+    width: 120px;
+    height: 120px;
+    background: #fafafa;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.sheet-img-box img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    transition: all 0.2s ease;
+}
+
+.sheet-top-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sheet-category-badge {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.sheet-product-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.sheet-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.sheet-selling-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.sheet-mrp {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.sheet-discount-pill {
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Sheet Multi-Image Thumbnails */
+.sheet-thumbs-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+
+.sheet-thumbs-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.sheet-thumb-item {
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2px;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sheet-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.sheet-thumb-item.active {
+    border-color: #e60000;
+    box-shadow: 0 0 0 1px #e60000;
+}
+
+/* Sheet Highlights & Offer */
+.sheet-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: #334155;
+}
+
+.sheet-highlights li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.35;
+}
+
+.sheet-highlights li i {
+    color: #16a34a;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.sheet-offer-box {
+    background: #fff5f5;
+    border: 1px dashed #fca5a5;
+    color: #b91c1c;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Sheet Bottom Actions (Sticky to Bottom of Sheet) */
+.sheet-actions-wrapper {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.sheet-btn-buy-wa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25D366;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 14px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+    transition: all 0.2s ease;
+}
+
+.sheet-btn-buy-wa:hover {
+    background: #1eb956;
+    color: #ffffff;
+}
+
+.sheet-secondary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.sheet-btn-view-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sheet-btn-view-full:hover {
+    background: #e2e8f0;
+}
+
+.sheet-btn-call {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sheet-btn-call:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+/* Mobile 2-Column Responsive Layout */
+@media (max-width: 768px) {
+    .fk-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .fk-product-card {
+        border-radius: 12px;
+    }
+
+    .fk-card-image-box {
+        height: 145px !important;
+        padding: 8px;
+    }
+
+    .fk-card-image-box img {
+        max-height: 130px;
+    }
+
+    .fk-card-body {
+        padding: 10px 12px 14px !important;
+        gap: 6px;
+    }
+
+    .fk-category-row {
+        margin-bottom: 2px;
+    }
+
+    .fk-category-tag {
+        font-size: 0.68rem !important;
+        padding: 1px 6px !important;
+    }
+
+    .fk-rating-badge {
+        font-size: 0.72rem !important;
+        padding: 1px 5px !important;
+    }
+
+    .fk-reviews-count {
+        display: none;
+    }
+
+    .fk-product-title {
+        font-size: 0.88rem !important;
+        line-height: 1.25 !important;
+        height: 2.5em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 4px;
+    }
+
+    .fk-card-highlights {
+        display: none;
+    }
+
+    .fk-offer-tag {
+        font-size: 0.72rem !important;
+        padding: 2px 6px !important;
+    }
+
+    .fk-price-box {
+        margin: 2px 0 4px !important;
+        gap: 6px;
+    }
+
+    .fk-price-primary .fk-amount {
+        font-size: 1.15rem !important;
+    }
+
+    .fk-price-mrp .fk-mrp-val {
+        font-size: 0.8rem !important;
+    }
+
+    .fk-stock-pill {
+        font-size: 0.7rem !important;
+        padding: 2px 6px !important;
+    }
+
+    .fk-card-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-top: 6px;
+    }
+
+    .fk-btn-specs {
+        font-size: 0.75rem !important;
+        padding: 7px 6px !important;
+        border-radius: 6px;
+    }
+
+    .fk-btn-whatsapp {
+        font-size: 0.75rem !important;
+        padding: 7px 6px !important;
+        border-radius: 6px;
+    }
+
+    /* Category bar: horizontal touch swipe */
+    .fk-categories-bar {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 6px;
+    }
+
+    .fk-categories-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-pill {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .fk-products-grid {
+        gap: 8px !important;
+    }
+
+    .fk-card-image-box {
+        height: 125px !important;
+    }
+
+    .fk-card-body {
+        padding: 8px !important;
+    }
+
+    .fk-product-title {
+        font-size: 0.82rem !important;
+    }
+
+    .fk-price-primary .fk-amount {
+        font-size: 1.05rem !important;
+    }
+
+    .fk-btn-specs, .fk-btn-whatsapp {
+        font-size: 0.7rem !important;
+        padding: 6px 4px !important;
     }
 }

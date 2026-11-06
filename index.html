@@ -448,6 +448,21 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
+    <!-- Mobile Slide-Up Quick Sheet (Option A) -->
+    <dialog id="mobileQuickSheet" class="mobile-bottom-sheet" closedby="any" aria-labelledby="sheetProductTitle">
+        <div class="sheet-container">
+            <div class="sheet-drag-bar">
+                <div class="sheet-drag-handle"></div>
+                <button type="button" class="sheet-close-btn" id="closeSheetBtn" aria-label="Close bottom sheet">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="sheetDynamicContent" class="sheet-body">
+                <!-- Dynamically populated via js/products.js -->
+            </div>
+        </div>
+    </dialog>
+
     <!-- Custom JS -->
     <script src="js/main.js"></script>
     <script src="js/products.js"></script>
