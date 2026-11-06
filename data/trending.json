@@ -1,0 +1,26 @@
+[
+  {
+    "slot": 1,
+    "product_id": "mk-gd-05",
+    "badge_text": "🔥 Today's Trending Gadget",
+    "video_url": "https://www.instagram.com/reel/DbvZprNiFGD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+  },
+  {
+    "slot": 2,
+    "product_id": "mk-ch-02",
+    "badge_text": "⚡ 65W GaN Fast Charger",
+    "video_url": "https://www.instagram.com/reel/DbvZprNiFGD/"
+  },
+  {
+    "slot": 3,
+    "product_id": "mk-sw-06",
+    "badge_text": "⌚ Smart Watch Ultra 2",
+    "video_url": "https://instagram.com/mkartvizag"
+  },
+  {
+    "slot": 4,
+    "product_id": "mk-cs-01",
+    "badge_text": "🛡️ MagSafe Frosted Matte Case",
+    "video_url": "https://instagram.com/mkartvizag"
+  }
+]

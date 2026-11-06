@@ -108,6 +108,9 @@ class ProductCatalog {
                         this.products = data;
                         this.updateCategoryCounts();
                         this.applyFilters();
+                        if (window.TrendingSlider) {
+                            window.TrendingSlider.refreshWithProducts(this.products);
+                        }
                         return;
                     }
                 }
@@ -123,6 +126,9 @@ class ProductCatalog {
             this.products = await res.json();
             this.updateCategoryCounts();
             this.applyFilters();
+            if (window.TrendingSlider) {
+                window.TrendingSlider.refreshWithProducts(this.products);
+            }
         } catch (error) {
             console.error('Error loading products:', error);
             this.renderError();

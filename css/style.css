@@ -624,6 +624,85 @@ ul {
     opacity: 1;
 }
 
+/* Product Info & Price Bar inside Promo Banner */
+.promo-product-info {
+    padding: 10px 14px 4px;
+    background: #ffffff;
+    border-top: 1px solid #f1f5f9;
+    text-align: left;
+    transition: opacity 0.3s ease;
+}
+
+.promo-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--color-black);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.promo-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.promo-price {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-black);
+}
+
+.promo-mrp {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.promo-discount {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #16a34a;
+    background: #dcfce7;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+}
+
+/* Dots pagination for trending slider */
+.promo-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0 10px;
+    background: #ffffff;
+}
+
+.promo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+.promo-dot.active {
+    width: 22px;
+    border-radius: 99px;
+    background: var(--color-primary);
+}
+
+.promo-dot:hover:not(.active) {
+    background: #94a3b8;
+}
+
 
 
 @keyframes float {

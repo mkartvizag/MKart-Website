@@ -306,6 +306,136 @@
             z-index: 1000;
             font-weight: 600;
         }
+
+        /* Trending Showcase Manager in Admin */
+        .trending-admin-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 992px) {
+            .trending-admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .trending-slot-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.25s ease;
+        }
+        .trending-slot-card.is-active-slot {
+            border-color: #e60000;
+            background: #fff;
+            box-shadow: 0 4px 14px rgba(230, 0, 0, 0.08);
+        }
+        .promo-banner-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .promo-badge {
+            background: #fff;
+            color: #0f172a;
+            text-align: center;
+            padding: 8px 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .promo-product-info {
+            padding: 10px 14px 4px;
+            background: #ffffff;
+            border-top: 1px solid #f1f5f9;
+            text-align: left;
+        }
+        .promo-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .promo-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .promo-price {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .promo-mrp {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+        .promo-discount {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #16a34a;
+            background: #dcfce7;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .promo-actions {
+            width: 100%;
+            padding: 8px 10px;
+            display: flex;
+            gap: 8px;
+            background: #fff;
+            justify-content: center;
+        }
+        .promo-btn {
+            flex: 1;
+            padding: 9px 5px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .promo-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0 10px;
+            background: #fff;
+        }
+        .promo-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .promo-dot.active {
+            width: 20px;
+            border-radius: 99px;
+            background: #e60000;
+        }
     </style>
 </head>
 <body>
@@ -348,6 +478,178 @@
             </div>
             <div style="margin-top: 14px; display: flex; gap: 10px;">
                 <button id="refreshBtn" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> Refresh from Supabase</button>
+            </div>
+        </div>
+
+        <!-- Today's Trending Gadgets Showcase Manager (Top Carousel) -->
+        <div class="settings-card" id="trendingShowcaseCard" style="border-left: 5px solid #e60000;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+                <div>
+                    <h3 style="margin-bottom: 4px; font-size: 1.2rem;">
+                        <i class="fa-solid fa-fire text-red"></i> Today's Trending Gadgets Showcase (Top Auto-Slider)
+                    </h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">
+                        Select up to <strong>4 products</strong> from your existing inventory to feature at the top on both Mobile and Desktop. Auto-scrolls with instant 1-click WhatsApp ordering.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-primary" onclick="saveTrendingShowcase()">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Trending to Supabase
+                    </button>
+                    <a href="http://localhost:3000" target="_blank" class="btn btn-outline" title="Open Store to see live slider">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Store
+                    </a>
+                </div>
+            </div>
+
+            <div class="trending-admin-grid">
+                <!-- Left: 4 Slots Config -->
+                <div class="trending-slots-container" style="display: flex; flex-direction: column; gap: 14px;">
+                    <!-- Slot 1 -->
+                    <div class="trending-slot-card is-active-slot" id="slotCard1">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                <i class="fa-solid fa-1 text-red"></i> SLOT 1 (Primary / Top Cover) *
+                            </span>
+                            <span class="photo-badge photo-badge-cover">FEATURED #1</span>
+                        </div>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product from Inventory *</label>
+                                <select id="tsProduct1" class="form-control" onchange="updateTrendingSlotPreview(1)">
+                                    <option value="">-- Choose Product for Slot 1 --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                <input type="text" id="tsBadge1" class="form-control" placeholder="Today's Trending Gadget" value="Today's Trending Gadget" oninput="updateTrendingSlotPreview(1)">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Video / Reel Link (Instagram / YouTube)</label>
+                                <input type="url" id="tsVideo1" class="form-control" placeholder="https://instagram.com/reel/..." value="https://www.instagram.com/reel/DbvZprNiFGD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" oninput="updateTrendingSlotPreview(1)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slot 2 -->
+                    <div class="trending-slot-card" id="slotCard2">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                <i class="fa-solid fa-2 text-red"></i> SLOT 2
+                            </span>
+                            <span class="photo-badge photo-badge-sub">SLOT #2</span>
+                        </div>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                <select id="tsProduct2" class="form-control" onchange="updateTrendingSlotPreview(2)">
+                                    <option value="">-- [None / Empty] --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                <input type="text" id="tsBadge2" class="form-control" placeholder="⚡ 65W GaN Fast Charger" oninput="updateTrendingSlotPreview(2)">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                <input type="url" id="tsVideo2" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(2)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slot 3 -->
+                    <div class="trending-slot-card" id="slotCard3">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                <i class="fa-solid fa-3 text-red"></i> SLOT 3
+                            </span>
+                            <span class="photo-badge photo-badge-sub">SLOT #3</span>
+                        </div>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                <select id="tsProduct3" class="form-control" onchange="updateTrendingSlotPreview(3)">
+                                    <option value="">-- [None / Empty] --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                <input type="text" id="tsBadge3" class="form-control" placeholder="⌚ Smart Watch Ultra 2" oninput="updateTrendingSlotPreview(3)">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                <input type="url" id="tsVideo3" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(3)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slot 4 -->
+                    <div class="trending-slot-card" id="slotCard4">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-weight: 800; font-size: 0.85rem; color: #0f172a;">
+                                <i class="fa-solid fa-4 text-red"></i> SLOT 4
+                            </span>
+                            <span class="photo-badge photo-badge-sub">SLOT #4</span>
+                        </div>
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-size: 0.8rem; font-weight: 700;">Select Product</label>
+                                <select id="tsProduct4" class="form-control" onchange="updateTrendingSlotPreview(4)">
+                                    <option value="">-- [None / Empty] --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Custom Badge / Headline</label>
+                                <input type="text" id="tsBadge4" class="form-control" placeholder="🛡️ MagSafe Frosted Case" oninput="updateTrendingSlotPreview(4)">
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 0.8rem;">Video / Reel Link</label>
+                                <input type="url" id="tsVideo4" class="form-control" placeholder="https://instagram.com/reel/..." oninput="updateTrendingSlotPreview(4)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Live Interactive Auto-Scroll Preview in Admin -->
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; position: sticky; top: 80px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-size: 0.82rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <i class="fa-solid fa-eye text-red"></i> Live Carousel Preview (Auto-Changes)
+                        </span>
+                        <span id="adminPreviewSlotIndex" style="font-size: 0.75rem; font-weight: 700; background: #e2e8f0; padding: 2px 8px; border-radius: 4px;">
+                            Slot 1 of 4
+                        </span>
+                    </div>
+
+                    <!-- Mock Promo Banner -->
+                    <div class="promo-banner-container" id="adminTrendingMockBanner" style="max-width: 100%; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+                        <div class="promo-badge" id="mockPromoBadge" style="padding: 8px 10px; font-size: 0.85rem;">
+                            <i class="fa-solid fa-fire text-red"></i> <span id="mockBadgeText">Today's Trending Gadget</span>
+                        </div>
+                        <div class="hero-image-slider" style="aspect-ratio: 4 / 4.2; background: #fafafa; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                            <img id="mockSlideImg" src="images/hero-slider/mini-printer.png" style="width: 100%; height: 100%; object-fit: contain; transition: opacity 0.35s ease;" alt="Preview">
+                        </div>
+                        <div class="promo-product-info" style="padding: 8px 12px 4px;">
+                            <div class="promo-title" id="mockProductTitle" style="font-size: 0.88rem;">Mini Pocket Bluetooth Thermal Printer (Inkless)</div>
+                            <div class="promo-price-row">
+                                <span class="promo-price" id="mockProductPrice" style="font-size: 1.05rem;">₹1,199</span>
+                                <span class="promo-mrp" id="mockProductMrp" style="font-size: 0.8rem;">₹1,999</span>
+                                <span class="promo-discount" id="mockProductDiscount" style="font-size: 0.7rem;">40% OFF</span>
+                            </div>
+                        </div>
+                        <div class="promo-actions" style="padding: 8px 10px; gap: 6px;">
+                            <div class="promo-btn btn-whatsapp" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
+                                <i class="fa-brands fa-whatsapp"></i> Order Now
+                            </div>
+                            <div class="promo-btn btn-instagram" style="padding: 8px 4px; font-size: 0.8rem; pointer-events: none;">
+                                <i class="fa-brands fa-instagram"></i> Watch Video
+                            </div>
+                        </div>
+                        <div class="promo-dots" id="mockDots" style="padding: 4px 0 8px;">
+                            <!-- Dots rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -666,6 +968,7 @@
                             };
                         });
                         renderTable();
+                        populateTrendingSlots();
                         showToast(`Loaded ${products.length} products from Supabase`);
                         return;
                     }
@@ -678,6 +981,7 @@
                 const res = await fetch('data/products.json');
                 products = await res.json();
                 renderTable();
+                populateTrendingSlots();
             } catch (e) {
                 showToast('Failed to load products');
             }
@@ -714,6 +1018,7 @@
                         <small style="color: #64748b;">${p.category} | ${p.brand || 'MKart'}</small>
                     </td>
                     <td>
+                        ${(p.specs && p.specs.is_trending) ? `<span class="photo-badge" style="background: #e60000; color: #fff; display:inline-block; margin-bottom: 2px;"><i class="fa-solid fa-fire"></i> Trending #${p.specs.trending_rank || 1}</span><br>` : ''}
                         ${p.badge ? `<span class="photo-badge photo-badge-cover" style="display:inline-block; margin-bottom: 2px;">${p.badge}</span><br>` : ''}
                         ${p.offer_tag ? `<small style="color: #e60000; font-weight:700;"><i class="fa-solid fa-gift"></i> ${p.offer_tag}</small>` : ''}
                     </td>
@@ -744,6 +1049,281 @@
                     </td>
                 </tr>
             `;}).join('');
+        }
+
+        // ====================================================================
+        // TODAY'S TRENDING SHOWCASE MANAGER (TOP CAROUSEL)
+        // ====================================================================
+        let adminPreviewTimer = null;
+        let adminPreviewIndex = 0;
+        let activeTrendingSlotsData = [];
+
+        async function populateTrendingSlots() {
+            // Build options list for all 4 slots
+            const defaultSlot1Id = 'mk-gd-05'; // Mini printer
+            const defaultSlot2Id = 'mk-ch-02'; // 65W charger
+            const defaultSlot3Id = 'mk-sw-06'; // Smartwatch
+            const defaultSlot4Id = 'mk-cs-01'; // MagSafe case
+
+            for (let s = 1; s <= 4; s++) {
+                const sel = document.getElementById(`tsProduct${s}`);
+                if (!sel) continue;
+                const prevVal = sel.value;
+                sel.innerHTML = (s === 1) 
+                    ? `<option value="">-- Choose Product for Slot 1 * --</option>`
+                    : `<option value="">-- [None / Empty] --</option>`;
+
+                products.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.title} (₹${p.selling_price}) - [${p.category}]`;
+                    sel.appendChild(opt);
+                });
+
+                if (prevVal) sel.value = prevVal;
+            }
+
+            // Determine initial values:
+            // Check Supabase products first
+            const sbTrending = products.filter(p => p.specs && p.specs.is_trending)
+                                       .sort((a, b) => (a.specs.trending_rank || 99) - (b.specs.trending_rank || 99));
+
+            if (sbTrending.length > 0) {
+                for (let i = 0; i < 4; i++) {
+                    const slotNum = i + 1;
+                    const p = sbTrending[i];
+                    if (p) {
+                        setSlotValues(slotNum, p.id, p.specs.trending_badge || '', p.specs.video_url || '');
+                    }
+                }
+            } else {
+                // Check localStorage or data/trending.json
+                let localCfg = null;
+                try {
+                    const raw = localStorage.getItem('mkart_trending_config');
+                    if (raw) localCfg = JSON.parse(raw);
+                } catch (e) {}
+
+                if (!localCfg) {
+                    try {
+                        const res = await fetch('data/trending.json');
+                        if (res.ok) localCfg = await res.json();
+                    } catch (e) {}
+                }
+
+                if (localCfg && localCfg.length) {
+                    localCfg.forEach(cfg => {
+                        setSlotValues(cfg.slot, cfg.product_id, cfg.badge_text, cfg.video_url);
+                    });
+                } else {
+                    // Default fallback assignments
+                    setSlotValues(1, defaultSlot1Id, "Today's Trending Gadget", "https://www.instagram.com/reel/DbvZprNiFGD/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==");
+                    setSlotValues(2, defaultSlot2Id, "⚡ 65W GaN Fast Charger", "https://www.instagram.com/reel/DbvZprNiFGD/");
+                    setSlotValues(3, defaultSlot3Id, "⌚ Smart Watch Ultra 2", "https://instagram.com/mkartvizag");
+                    setSlotValues(4, defaultSlot4Id, "🛡️ MagSafe Frosted Case", "https://instagram.com/mkartvizag");
+                }
+            }
+
+            refreshAdminTrendingSlotsData();
+            startAdminPreviewAutoRotate();
+        }
+
+        function setSlotValues(slot, prodId, badge, video) {
+            const pSel = document.getElementById(`tsProduct${slot}`);
+            const bInp = document.getElementById(`tsBadge${slot}`);
+            const vInp = document.getElementById(`tsVideo${slot}`);
+            if (pSel && prodId) pSel.value = prodId;
+            if (bInp && badge) bInp.value = badge;
+            if (vInp && video) vInp.value = video;
+        }
+
+        function refreshAdminTrendingSlotsData() {
+            activeTrendingSlotsData = [];
+            for (let s = 1; s <= 4; s++) {
+                const prodId = document.getElementById(`tsProduct${s}`)?.value;
+                const badge = document.getElementById(`tsBadge${s}`)?.value.trim() || (s === 1 ? "Today's Trending Gadget" : `Trending #${s}`);
+                const video = document.getElementById(`tsVideo${s}`)?.value.trim();
+                const card = document.getElementById(`slotCard${s}`);
+
+                if (prodId) {
+                    const prod = products.find(p => p.id === prodId);
+                    if (prod) {
+                        activeTrendingSlotsData.push({
+                            slot: s,
+                            product: prod,
+                            badge: badge,
+                            video: video || `product.html?id=${encodeURIComponent(prod.id)}`
+                        });
+                        if (card) card.classList.add('is-active-slot');
+                    }
+                } else {
+                    if (card && s > 1) card.classList.remove('is-active-slot');
+                }
+            }
+
+            // Render mock preview dots
+            const dotsEl = document.getElementById('mockDots');
+            if (dotsEl) {
+                dotsEl.innerHTML = activeTrendingSlotsData.map((_, i) => 
+                    `<span class="promo-dot ${i === 0 ? 'active' : ''}" style="cursor: pointer;" onclick="setAdminPreviewIndex(${i})"></span>`
+                ).join('');
+            }
+
+            updateAdminMockBanner(0);
+        }
+
+        function updateTrendingSlotPreview(slot) {
+            refreshAdminTrendingSlotsData();
+            const idx = activeTrendingSlotsData.findIndex(item => item.slot === slot);
+            if (idx !== -1) {
+                setAdminPreviewIndex(idx);
+            }
+        }
+
+        function setAdminPreviewIndex(index) {
+            if (!activeTrendingSlotsData.length) return;
+            adminPreviewIndex = (index + activeTrendingSlotsData.length) % activeTrendingSlotsData.length;
+            updateAdminMockBanner(adminPreviewIndex);
+        }
+
+        function updateAdminMockBanner(index) {
+            if (!activeTrendingSlotsData[index]) return;
+            const item = activeTrendingSlotsData[index];
+            const p = item.product;
+
+            const badgeEl = document.getElementById('mockBadgeText');
+            const titleEl = document.getElementById('mockProductTitle');
+            const priceEl = document.getElementById('mockProductPrice');
+            const mrpEl = document.getElementById('mockProductMrp');
+            const discEl = document.getElementById('mockProductDiscount');
+            const imgEl = document.getElementById('mockSlideImg');
+            const slotIdxEl = document.getElementById('adminPreviewSlotIndex');
+
+            if (badgeEl) badgeEl.textContent = item.badge;
+            if (titleEl) titleEl.textContent = p.title;
+
+            const price = Number(p.selling_price || 0);
+            const mrp = Number(p.mrp || 0);
+            const disc = p.discount_percent || (mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0);
+
+            if (priceEl) priceEl.textContent = `₹${price.toLocaleString('en-IN')}`;
+            if (mrpEl) mrpEl.textContent = mrp > 0 ? `₹${mrp.toLocaleString('en-IN')}` : '';
+            if (discEl) {
+                discEl.style.display = disc > 0 ? 'inline-block' : 'none';
+                discEl.textContent = `${disc}% OFF`;
+            }
+
+            const imgUrl = (Array.isArray(p.images) && p.images[0]) || p.image || 'images/hero-slider/mini-printer.png';
+            if (imgEl) {
+                imgEl.style.opacity = '0';
+                setTimeout(() => {
+                    imgEl.src = imgUrl;
+                    imgEl.style.opacity = '1';
+                }, 180);
+            }
+
+            if (slotIdxEl) {
+                slotIdxEl.textContent = `Slot ${item.slot} of ${activeTrendingSlotsData.length}`;
+            }
+
+            // Update dots
+            const dots = document.querySelectorAll('#mockDots .promo-dot');
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        }
+
+        function startAdminPreviewAutoRotate() {
+            if (adminPreviewTimer) clearInterval(adminPreviewTimer);
+            adminPreviewTimer = setInterval(() => {
+                if (activeTrendingSlotsData.length > 1) {
+                    adminPreviewIndex = (adminPreviewIndex + 1) % activeTrendingSlotsData.length;
+                    updateAdminMockBanner(adminPreviewIndex);
+                }
+            }, 3200);
+        }
+
+        async function saveTrendingShowcase() {
+            refreshAdminTrendingSlotsData();
+
+            if (!activeTrendingSlotsData.length) {
+                alert('Please select at least 1 product for Slot 1!');
+                return;
+            }
+
+            const selectedProdIds = new Set(activeTrendingSlotsData.map(item => item.product.id));
+
+            // Prepare local storage array
+            const trendingConfigToSave = activeTrendingSlotsData.map(item => ({
+                slot: item.slot,
+                product_id: item.product.id,
+                badge_text: item.badge,
+                video_url: item.video
+            }));
+
+            localStorage.setItem('mkart_trending_config', JSON.stringify(trendingConfigToSave));
+
+            const sbUrl = document.getElementById('sbUrl').value.trim().replace(/\/+$/, '');
+            let updatedCount = 0;
+
+            if (sbUrl) {
+                showToast('Saving trending showcase to Supabase...');
+
+                // 1. Update each selected product in Supabase
+                for (const item of activeTrendingSlotsData) {
+                    const p = item.product;
+                    const specsObj = (p.specs && typeof p.specs === 'object') ? { ...p.specs } : {};
+                    specsObj.is_trending = true;
+                    specsObj.trending_rank = item.slot;
+                    specsObj.trending_badge = item.badge;
+                    specsObj.video_url = item.video;
+
+                    p.specs = specsObj;
+
+                    try {
+                        const res = await fetch(`${sbUrl}/rest/v1/products?id=eq.${p.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                ...getHeaders(),
+                                'Prefer': 'return=representation'
+                            },
+                            body: JSON.stringify({
+                                specs: specsObj,
+                                updated_at: new Date().toISOString()
+                            })
+                        });
+                        if (res.ok) updatedCount++;
+                    } catch (e) {
+                        console.error('Failed to update trending product:', p.id, e);
+                    }
+                }
+
+                // 2. Clear trending flag from any products that are NO LONGER in the selected 4
+                for (const p of products) {
+                    if (!selectedProdIds.has(p.id) && p.specs && p.specs.is_trending) {
+                        const specsObj = { ...p.specs };
+                        delete specsObj.is_trending;
+                        delete specsObj.trending_rank;
+                        delete specsObj.trending_badge;
+                        p.specs = specsObj;
+
+                        try {
+                            await fetch(`${sbUrl}/rest/v1/products?id=eq.${p.id}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    ...getHeaders(),
+                                    'Prefer': 'return=representation'
+                                },
+                                body: JSON.stringify({
+                                    specs: specsObj,
+                                    updated_at: new Date().toISOString()
+                                })
+                            });
+                        } catch (e) {}
+                    }
+                }
+            }
+
+            renderTable();
+            showToast(`🔥 Trending Showcase updated! Saved ${activeTrendingSlotsData.length} items to Supabase.`);
         }
 
         // ====================================================================

@@ -28,7 +28,11 @@
       "Compatibility": "iPhone 13 to 16 Pro Max / Galaxy S23-S25 / OnePlus",
       "Bezel Height": "1.2mm raised screen edge & 0.8mm camera ring",
       "Warranty": "3 Months Replacement against manufacturing defects",
-      "Colors Available": "Matte Smoke Black, Titanium Blue, Deep Emerald"
+      "Colors Available": "Matte Smoke Black, Titanium Blue, Deep Emerald",
+      "is_trending": true,
+      "trending_rank": 4,
+      "trending_badge": "\ud83d\udee1\ufe0f MagSafe Frosted Case",
+      "video_url": "https://instagram.com/mkartvizag"
     },
     "description": "Premium tactical protective case engineered for everyday drop security without adding bulk. Features strong magnetic alignment for MagSafe wireless charging, car holders, and card wallets."
   },
@@ -61,7 +65,11 @@
       "Port 1 (Type-C)": "5V/3A, 9V/3A, 12V/3A, 15V/3A, 20V/3.25A (65W Max)",
       "Port 2 (USB-A)": "5V/3A, 9V/2A, 12V/1.5A (18W QC3.0)",
       "Device Support": "iPhones, Samsung Super Fast Charge, MacBooks, Tablets",
-      "Warranty": "1 Year Replacement Warranty"
+      "Warranty": "1 Year Replacement Warranty",
+      "is_trending": true,
+      "trending_rank": 2,
+      "trending_badge": "\u26a1 65W GaN Fast Charger",
+      "video_url": "https://www.instagram.com/reel/DbvZprNiFGD/"
     },
     "description": "Charge your smartphone from 0% to 70% in just 30 minutes. Powered by Gallium Nitride (GaN) semiconductors for ultra-cool, ultra-compact high-speed power delivery."
   },
@@ -84,7 +92,7 @@
       "images/category-cases-v2.png"
     ],
     "highlights": [
-      "28-degree private viewing angle — blocks side snooping on buses/crowds",
+      "28-degree private viewing angle \u2014 blocks side snooping on buses/crowds",
       "Silky matte anti-glare finish: no sun glare & no fingerprint smudges",
       "Free precision installation in store at our Gajuwaka branch"
     ],
@@ -148,7 +156,7 @@
       "images/gadgets.png"
     ],
     "highlights": [
-      "100% Inkless Thermal Printing — never buy expensive ink or toner!",
+      "100% Inkless Thermal Printing \u2014 never buy expensive ink or toner!",
       "Connects to Android and iPhone via Bluetooth in seconds",
       "Includes 3 free thermal paper rolls in the box"
     ],
@@ -157,7 +165,11 @@
       "Battery": "1200mAh Built-in Rechargeable (USB Type-C Charging)",
       "Print Width": "57mm Paper Width",
       "App Functions": "Print Study Notes, To-Do Lists, Photos, Labels, Barcodes",
-      "Dimensions": "8.5 x 8.5 x 4.0 cm (Ultra Compact Pocket Size)"
+      "Dimensions": "8.5 x 8.5 x 4.0 cm (Ultra Compact Pocket Size)",
+      "is_trending": true,
+      "trending_rank": 1,
+      "trending_badge": "Today's Trending Gadget",
+      "video_url": "https://www.instagram.com/reel/DbvZprNiFGD/"
     },
     "description": "The viral pocket printer seen all over Instagram! Perfect for students, shop owners, to-do list lovers, and scrapbooking. No ink required ever."
   },
@@ -189,13 +201,17 @@
       "Battery Life": "Up to 4-5 Days on single charge (Wireless Magnetic Charger)",
       "Build": "Titanium-finish zinc alloy casing + Ocean Silicone Strap",
       "Compatibility": "Compatible with all Android and iOS devices",
-      "Warranty": "6 Months Store Warranty"
+      "Warranty": "6 Months Store Warranty",
+      "is_trending": true,
+      "trending_rank": 3,
+      "trending_badge": "\u231a Smart Watch Ultra 2",
+      "video_url": "https://instagram.com/mkartvizag"
     },
     "description": "Full-featured flagship look with Bluetooth dialing, call logs, WhatsApp message previews, customizable watch faces, and daily health tracking."
   },
   {
     "id": "mk-hd-07",
-    "title": "Magnetic 360° Rotating Car Dashboard Mount",
+    "title": "Magnetic 360\u00b0 Rotating Car Dashboard Mount",
     "slug": "magnetic-360-car-dashboard-mount",
     "category": "Holders & Stands",
     "brand": "GripMax",
@@ -212,7 +228,7 @@
       "images/gadgets.png"
     ],
     "highlights": [
-      "6x N52 Neodymium Magnets — phone won't fall even on speed breakers",
+      "6x N52 Neodymium Magnets \u2014 phone won't fall even on speed breakers",
       "360-degree alloy ball joint for landscape GPS & portrait calling",
       "Strong industrial 3M VHB adhesive base leaves no residue"
     ],

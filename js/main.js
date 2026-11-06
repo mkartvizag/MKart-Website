@@ -100,14 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // 6. Hero Image Slider
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    if (heroSlides.length > 1) {
-        let currentSlide = 0;
-        setInterval(() => {
-            heroSlides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % heroSlides.length;
-            heroSlides[currentSlide].classList.add('active');
-        }, 4000); // Change image every 4 seconds
+    // 6. Hero Image Slider (Managed by js/trending-slider.js if present)
+    if (!document.getElementById('trendingPromoBanner')) {
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        if (heroSlides.length > 1) {
+            let currentSlide = 0;
+            setInterval(() => {
+                heroSlides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % heroSlides.length;
+                heroSlides[currentSlide].classList.add('active');
+            }, 4000); // Change image every 4 seconds
+        }
     }
 });
