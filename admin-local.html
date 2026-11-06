@@ -834,6 +834,73 @@
             border-color: #fecdd3;
             color: #e60000;
         }
+
+        /* Google SEO Snippet Preview */
+        .google-preview-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: left;
+        }
+        .google-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.76rem;
+            color: #4d5156;
+            margin-bottom: 3px;
+        }
+        .google-preview-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #e60000;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .google-preview-url {
+            color: #202124;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .google-preview-title {
+            color: #1a0dab;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.3;
+            margin-bottom: 3px;
+            word-break: break-word;
+        }
+        .google-preview-desc {
+            color: #4d5156;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+        .seo-char-counter {
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-top: 2px;
+            display: inline-block;
+        }
+        .seo-char-good {
+            color: #16a34a;
+        }
+        .seo-char-warning {
+            color: #d97706;
+        }
+        .seo-char-bad {
+            color: #dc2626;
+        }
     </style>
 </head>
 <body>
@@ -880,7 +947,7 @@
                 </label>
             </div>
             <div style="margin-top: 8px; font-size: 0.72rem; color: #64748b;">
-                Default Store PIN: <strong>8855</strong>
+                Authorized Store Personnel Only
             </div>
         </div>
     </div>
@@ -1144,7 +1211,7 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Product Title *</label>
-                            <input type="text" id="npTitle" class="form-control" placeholder="e.g. 65W GaN Dual-Port Fast Charger" required>
+                            <input type="text" id="npTitle" class="form-control" placeholder="e.g. 65W GaN Dual-Port Fast Charger" required oninput="updateSeoFromTitle('np')">
                         </div>
                         <div class="form-group">
                             <label>Category *</label>
@@ -1273,6 +1340,89 @@
                         <textarea id="npDescription" class="form-control" rows="2" placeholder="Describe the product details, build quality, and use cases..."></textarea>
                     </div>
 
+                    <!-- Google Search SEO & Meta Optimizer Section -->
+                    <div style="margin-top: 20px; padding: 18px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                            <h4 style="font-size: 1rem; font-weight: 800; color: #166534; margin: 0;">
+                                <i class="fa-brands fa-google text-red"></i> Google SEO, Search URL &amp; Meta Settings
+                            </h4>
+                            <span style="font-size: 0.75rem; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 99px; font-weight: 700;">
+                                Boosts Google Ranking in Gajuwaka Vizag
+                            </span>
+                        </div>
+                        <p style="font-size: 0.82rem; color: #374151; margin-bottom: 14px;">
+                            Optimize how this product appears when customers search on Google. Title, SEO URL, and description auto-fill from the product name, and you can customize them anytime.
+                        </p>
+
+                        <div class="form-grid">
+                            <!-- Custom URL Slug / Permalink -->
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-weight: 700; color: #0f172a;">
+                                    Product URL Slug / Permalink *
+                                    <small style="font-weight: 400; color: #64748b;">(Clean web link for sharing on WhatsApp / Instagram)</small>
+                                </label>
+                                <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden;">
+                                    <span style="background: #f1f5f9; padding: 10px 12px; color: #64748b; font-size: 0.82rem; font-weight: 600; border-right: 1px solid #cbd5e1; white-space: nowrap;">
+                                        mkartvizag.in/product.html?name=
+                                    </span>
+                                    <input type="text" id="npSlug" class="form-control" style="border: none; border-radius: 0; padding: 10px 12px;" placeholder="65w-gan-fast-charger" oninput="handleSlugManualInput('np')" required>
+                                </div>
+                            </div>
+
+                            <!-- Google SEO Meta Title -->
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label style="font-weight: 700; color: #0f172a;">
+                                        Google SEO Title * 
+                                        <small style="font-weight: 400; color: #64748b;">(Appears in blue on Google Search)</small>
+                                    </label>
+                                    <span id="npMetaTitleCount" class="seo-char-counter seo-char-good">0 / 60 chars</span>
+                                </div>
+                                <input type="text" id="npMetaTitle" class="form-control" placeholder="e.g. Buy 65W GaN Dual-Port Fast Charger in Gajuwaka Vizag | MKart" oninput="updateSeoPreview('np')" required>
+                            </div>
+
+                            <!-- Google SEO Meta Description -->
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label style="font-weight: 700; color: #0f172a;">
+                                        Google Search Meta Description *
+                                        <small style="font-weight: 400; color: #64748b;">(Snippet text under title in Google results)</small>
+                                    </label>
+                                    <span id="npMetaDescCount" class="seo-char-counter seo-char-good">0 / 160 chars</span>
+                                </div>
+                                <textarea id="npMetaDesc" class="form-control" rows="2" placeholder="e.g. Buy genuine 65W GaN Fast Charger at lowest wholesale & retail price at MKart Gajuwaka, Visakhapatnam. Store pickup, 6 months warranty, 1-click WhatsApp order." oninput="updateSeoPreview('np')" required></textarea>
+                            </div>
+
+                            <!-- Focus SEO Keywords -->
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label style="font-weight: 700; color: #0f172a;">
+                                    Focus Search Keywords / Tags
+                                    <small style="font-weight: 400; color: #64748b;">(Helps local customers find this item on search engines)</small>
+                                </label>
+                                <input type="text" id="npMetaKeywords" class="form-control" placeholder="e.g. 65w charger, fast charger vizag, mobile charger gajuwaka, cheap phone accessories">
+                            </div>
+                        </div>
+
+                        <!-- Live Google Search Result Preview -->
+                        <div style="margin-top: 14px;">
+                            <span style="font-size: 0.78rem; font-weight: 800; color: #166534; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">
+                                <i class="fa-solid fa-eye"></i> Live Google Search Result Preview:
+                            </span>
+                            <div class="google-preview-card">
+                                <div class="google-preview-header">
+                                    <span class="google-preview-icon">M</span>
+                                    <span class="google-preview-url">https://www.mkartvizag.in › product › <span id="npPreviewSlug">your-product-link</span></span>
+                                </div>
+                                <div class="google-preview-title" id="npPreviewTitle">
+                                    Your Product SEO Title Will Look Like This on Google
+                                </div>
+                                <div class="google-preview-desc" id="npPreviewDesc">
+                                    Your meta description snippet will show here on Google Search when customers search for mobile accessories in Visakhapatnam and Gajuwaka.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary" style="margin-top: 20px; padding: 12px 24px; font-size: 1rem;">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Save &amp; Publish Product to Supabase
                     </button>
@@ -1284,28 +1434,50 @@
         <!-- TAB 4: SETTINGS, SUPABASE & PIN SECURITY  -->
         <!-- ========================================== -->
         <div id="tab-settings" class="admin-tab-section">
-            <div class="settings-card">
-                <h3><i class="fa-solid fa-database text-red"></i> Live Supabase Cloud Connection</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Supabase Project URL</label>
-                        <input type="text" id="sbUrl" class="form-control" value="https://qryizrgkzamytqyebmuy.supabase.co">
+            <!-- Compact Cloud Database Status Card (Details Hidden) -->
+            <div class="settings-card" style="padding: 14px 16px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: #dcfce7; color: #15803d; font-size: 1.1rem;">
+                            <i class="fa-solid fa-cloud-bolt"></i>
+                        </span>
+                        <div>
+                            <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Supabase Cloud Database</div>
+                            <div style="font-size: 0.78rem; color: #16a34a; font-weight: 700;">
+                                <i class="fa-solid fa-circle-check"></i> Connected &amp; Real-time Sync Active
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Supabase Key (Publishable or Service Key)</label>
-                        <input type="password" id="sbKey" class="form-control" value="sb_publishable_TYj0vqJF7UYuWS08CwONsQ_C17O8oxD">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button id="refreshBtn" type="button" class="btn btn-outline btn-sm">
+                            <i class="fa-solid fa-rotate"></i> Sync from Cloud
+                        </button>
                     </div>
                 </div>
-                <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button id="refreshBtn" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> Refresh from Supabase</button>
-                </div>
+
+                <!-- Hidden Collapsible Database Configuration (Hidden by default to save space) -->
+                <details style="margin-top: 10px; border-top: 1px dashed #e2e8f0; padding-top: 8px; font-size: 0.78rem; color: #64748b;">
+                    <summary style="cursor: pointer; font-weight: 700; user-select: none;">
+                        <i class="fa-solid fa-sliders"></i> Advanced Database Connection (Hidden)
+                    </summary>
+                    <div class="form-grid" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label style="font-size: 0.75rem;">Supabase Project URL</label>
+                            <input type="text" id="sbUrl" class="form-control" value="https://qryizrgkzamytqyebmuy.supabase.co" style="font-size: 0.8rem; padding: 6px 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 0.75rem;">Supabase Key</label>
+                            <input type="password" id="sbKey" class="form-control" value="sb_publishable_TYj0vqJF7UYuWS08CwONsQ_C17O8oxD" style="font-size: 0.8rem; padding: 6px 10px;">
+                        </div>
+                    </div>
+                </details>
             </div>
 
             <!-- PIN & Security Settings Card -->
             <div class="settings-card">
                 <h3><i class="fa-solid fa-shield-halved text-red"></i> Store Admin PIN Security</h3>
                 <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px;">
-                    Control access to your store inventory and direct phone photo uploads. Default PIN is <strong>8855</strong>.
+                    Control access to your store inventory and direct phone photo uploads. Protected with 4-digit Store PIN.
                 </p>
                 <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
                     <div class="form-group">
@@ -1355,7 +1527,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Title *</label>
-                        <input type="text" id="epTitle" class="form-control" required>
+                        <input type="text" id="epTitle" class="form-control" required oninput="updateSeoFromTitle('ep')">
                     </div>
                     <div class="form-group">
                         <label>Category *</label>
@@ -1446,6 +1618,83 @@
                     <label>Description</label>
                     <textarea id="epDescription" class="form-control" rows="2"></textarea>
                 </div>
+
+                <!-- Google Search SEO & Meta Optimizer Section -->
+                <div style="margin-top: 18px; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: #166534; margin: 0;">
+                            <i class="fa-brands fa-google text-red"></i> Google SEO, Search URL &amp; Meta Settings
+                        </h4>
+                        <span style="font-size: 0.72rem; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 99px; font-weight: 700;">
+                            Google Search Preview
+                        </span>
+                    </div>
+
+                    <div class="form-grid">
+                        <!-- Custom URL Slug / Permalink -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label style="font-weight: 700; color: #0f172a;">
+                                Product URL Slug / Permalink *
+                                <small style="font-weight: 400; color: #64748b;">(Unique web link for sharing)</small>
+                            </label>
+                            <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden;">
+                                <span style="background: #f1f5f9; padding: 8px 10px; color: #64748b; font-size: 0.8rem; font-weight: 600; border-right: 1px solid #cbd5e1; white-space: nowrap;">
+                                    mkartvizag.in/product.html?name=
+                                </span>
+                                <input type="text" id="epSlug" class="form-control" style="border: none; border-radius: 0; padding: 8px 10px;" placeholder="product-slug" oninput="handleSlugManualInput('ep')" required>
+                            </div>
+                        </div>
+
+                        <!-- Google SEO Meta Title -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label style="font-weight: 700; color: #0f172a;">
+                                    Google SEO Title * 
+                                    <small style="font-weight: 400; color: #64748b;">(Blue title in Google results)</small>
+                                </label>
+                                <span id="epMetaTitleCount" class="seo-char-counter seo-char-good">0 / 60 chars</span>
+                            </div>
+                            <input type="text" id="epMetaTitle" class="form-control" placeholder="Buy [Product Title] in Gajuwaka Vizag | MKart" oninput="updateSeoPreview('ep')" required>
+                        </div>
+
+                        <!-- Google SEO Meta Description -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label style="font-weight: 700; color: #0f172a;">
+                                    Google Search Meta Description *
+                                    <small style="font-weight: 400; color: #64748b;">(Snippet under title)</small>
+                                </label>
+                                <span id="epMetaDescCount" class="seo-char-counter seo-char-good">0 / 160 chars</span>
+                            </div>
+                            <textarea id="epMetaDesc" class="form-control" rows="2" placeholder="Product search description..." oninput="updateSeoPreview('ep')" required></textarea>
+                        </div>
+
+                        <!-- Focus SEO Keywords -->
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label style="font-weight: 700; color: #0f172a;">Focus Search Keywords / Tags</label>
+                            <input type="text" id="epMetaKeywords" class="form-control" placeholder="comma-separated search keywords...">
+                        </div>
+                    </div>
+
+                    <!-- Live Google Search Result Preview -->
+                    <div style="margin-top: 12px;">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: #166534; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px;">
+                            <i class="fa-solid fa-eye"></i> Live Google Search Result Preview:
+                        </span>
+                        <div class="google-preview-card">
+                            <div class="google-preview-header">
+                                <span class="google-preview-icon">M</span>
+                                <span class="google-preview-url">https://www.mkartvizag.in › product › <span id="epPreviewSlug">your-product-link</span></span>
+                            </div>
+                            <div class="google-preview-title" id="epPreviewTitle">
+                                Product SEO Title
+                            </div>
+                            <div class="google-preview-desc" id="epPreviewDesc">
+                                Meta description snippet text...
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
@@ -1489,8 +1738,13 @@
                                 ? p.specs.images
                                 : (Array.isArray(p.images) && p.images.length > 0 ? p.images : (p.image ? [p.image] : []));
                             const offer = (p.specs && p.specs.offer_tag) || p.offer_tag || '';
+                            const seo = (p.specs && p.specs.seo) || {};
                             return {
                                 ...p,
+                                slug: p.slug || seo.slug || generateSlug(p.title),
+                                meta_title: p.meta_title || seo.meta_title || '',
+                                meta_description: p.meta_description || seo.meta_description || '',
+                                meta_keywords: p.meta_keywords || seo.meta_keywords || '',
                                 images: imgs,
                                 image: imgs[0] || p.image || 'images/category-cases-v2.png',
                                 offer_tag: offer
@@ -1508,7 +1762,17 @@
 
             try {
                 const res = await fetch('data/products.json');
-                products = await res.json();
+                const rawLocal = await res.json();
+                products = rawLocal.map(p => {
+                    const seo = (p.specs && p.specs.seo) || {};
+                    return {
+                        ...p,
+                        slug: p.slug || seo.slug || generateSlug(p.title),
+                        meta_title: p.meta_title || seo.meta_title || '',
+                        meta_description: p.meta_description || seo.meta_description || '',
+                        meta_keywords: p.meta_keywords || seo.meta_keywords || ''
+                    };
+                });
                 renderTable();
                 populateTrendingSlots();
             } catch (e) {
@@ -2161,6 +2425,127 @@
         }
 
         // ====================================================================
+        // GOOGLE SEO & META HELPER LOGIC
+        // ====================================================================
+        function generateSlug(text) {
+            if (!text) return 'mk-' + Date.now().toString(36);
+            return text.toString().toLowerCase().trim()
+                .replace(/&/g, 'and')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function generateDefaultMetaTitle(title, category) {
+            if (!title) return 'MKart Mobile Accessories & Smart Gadgets | Gajuwaka Vizag';
+            const cleanTitle = title.trim();
+            return `Buy ${cleanTitle} in Gajuwaka Vizag | MKart`;
+        }
+
+        function generateDefaultMetaDesc(title, price, mrp) {
+            if (!title) return 'Buy premium mobile accessories, cases, screen guards, and chargers at lowest price at MKart Gajuwaka, Visakhapatnam.';
+            const pStr = price ? ` at special store price ₹${Number(price).toLocaleString('en-IN')}` : '';
+            const mrpStr = (mrp && Number(mrp) > Number(price)) ? ` (MRP ₹${Number(mrp).toLocaleString('en-IN')})` : '';
+            return `Buy ${title.trim()}${pStr}${mrpStr} at MKart Gajuwaka, Visakhapatnam. 100% genuine quality, in-store testing, warranty & fast WhatsApp order support.`;
+        }
+
+        function generateDefaultKeywords(title, category, brand) {
+            const list = [
+                title,
+                brand || 'MKart',
+                category || 'Mobile Accessories',
+                'gajuwaka',
+                'vizag',
+                'visakhapatnam',
+                'mobile shop',
+                'cheap mobile accessories'
+            ].filter(Boolean);
+            return list.join(', ');
+        }
+
+        let npSlugTouchedManually = false;
+        let epSlugTouchedManually = false;
+
+        function handleSlugManualInput(prefix) {
+            if (prefix === 'np') npSlugTouchedManually = true;
+            else epSlugTouchedManually = true;
+            updateSeoPreview(prefix);
+        }
+
+        function updateSeoFromTitle(prefix) {
+            const titleInput = document.getElementById(`${prefix}Title`);
+            const titleVal = titleInput ? titleInput.value.trim() : '';
+            const categoryEl = document.getElementById(`${prefix}Category`);
+            const categoryVal = categoryEl ? categoryEl.value : '';
+            const priceEl = document.getElementById(`${prefix}Price`);
+            const priceVal = priceEl ? priceEl.value : '';
+            const mrpEl = document.getElementById(`${prefix}Mrp`);
+            const mrpVal = mrpEl ? mrpEl.value : '';
+            const brandEl = document.getElementById(`${prefix}Brand`);
+            const brandVal = brandEl ? brandEl.value.trim() : '';
+
+            const slugInput = document.getElementById(`${prefix}Slug`);
+            const metaTitleInput = document.getElementById(`${prefix}MetaTitle`);
+            const descInput = document.getElementById(`${prefix}MetaDesc`);
+            const kwInput = document.getElementById(`${prefix}MetaKeywords`);
+
+            const isTouched = (prefix === 'np') ? npSlugTouchedManually : epSlugTouchedManually;
+
+            if (slugInput && (!isTouched || !slugInput.value)) {
+                slugInput.value = generateSlug(titleVal);
+            }
+            if (metaTitleInput && (!metaTitleInput.value || metaTitleInput.dataset.auto === 'true')) {
+                metaTitleInput.value = generateDefaultMetaTitle(titleVal, categoryVal);
+                metaTitleInput.dataset.auto = 'true';
+            }
+            if (descInput && (!descInput.value || descInput.dataset.auto === 'true')) {
+                descInput.value = generateDefaultMetaDesc(titleVal, priceVal, mrpVal);
+                descInput.dataset.auto = 'true';
+            }
+            if (kwInput && (!kwInput.value || kwInput.dataset.auto === 'true')) {
+                kwInput.value = generateDefaultKeywords(titleVal, categoryVal, brandVal);
+                kwInput.dataset.auto = 'true';
+            }
+
+            updateSeoPreview(prefix);
+        }
+
+        function updateSeoPreview(prefix) {
+            const slugEl = document.getElementById(`${prefix}Slug`);
+            const metaTitleEl = document.getElementById(`${prefix}MetaTitle`);
+            const metaDescEl = document.getElementById(`${prefix}MetaDesc`);
+            const titleEl = document.getElementById(`${prefix}Title`);
+
+            const slug = (slugEl && slugEl.value.trim()) || 'your-product-link';
+            const title = (metaTitleEl && metaTitleEl.value.trim()) || (titleEl && titleEl.value.trim()) || 'Product Title';
+            const desc = (metaDescEl && metaDescEl.value.trim()) || 'Meta description snippet will show here on Google Search.';
+
+            // Update Live Google Preview Card
+            const previewSlug = document.getElementById(`${prefix}PreviewSlug`);
+            const previewTitle = document.getElementById(`${prefix}PreviewTitle`);
+            const previewDesc = document.getElementById(`${prefix}PreviewDesc`);
+
+            if (previewSlug) previewSlug.textContent = slug;
+            if (previewTitle) previewTitle.textContent = title;
+            if (previewDesc) previewDesc.textContent = desc;
+
+            // Update Character Counters
+            const titleLen = title.length;
+            const descLen = desc.length;
+
+            const titleCountEl = document.getElementById(`${prefix}MetaTitleCount`);
+            if (titleCountEl) {
+                titleCountEl.textContent = `${titleLen} / 60 chars`;
+                titleCountEl.className = 'seo-char-counter ' + (titleLen > 65 ? 'seo-char-warning' : (titleLen >= 25 ? 'seo-char-good' : ''));
+            }
+
+            const descCountEl = document.getElementById(`${prefix}MetaDescCount`);
+            if (descCountEl) {
+                descCountEl.textContent = `${descLen} / 160 chars`;
+                descCountEl.className = 'seo-char-counter ' + (descLen > 165 ? 'seo-char-warning' : (descLen >= 60 ? 'seo-char-good' : ''));
+            }
+        }
+
+        // ====================================================================
         // ADD NEW PRODUCT SUBMIT
         // ====================================================================
         document.getElementById('newProductForm').addEventListener('submit', async (e) => {
@@ -2176,6 +2561,12 @@
             const description = document.getElementById('npDescription').value.trim();
             const offer_tag = document.getElementById('npOfferTag').value.trim();
 
+            // SEO & Meta Fields
+            const slugVal = (document.getElementById('npSlug').value.trim() || generateSlug(title)).toLowerCase();
+            const metaTitleVal = document.getElementById('npMetaTitle').value.trim() || generateDefaultMetaTitle(title, category);
+            const metaDescVal = document.getElementById('npMetaDesc').value.trim() || generateDefaultMetaDesc(title, selling_price, mrp);
+            const metaKwVal = document.getElementById('npMetaKeywords').value.trim();
+
             let badge = document.getElementById('npBadgeSelect').value;
             if (badge === 'CUSTOM') {
                 badge = document.getElementById('npCustomBadge').value.trim();
@@ -2189,18 +2580,24 @@
 
             const highlights = highlightsRaw ? highlightsRaw.split(',').map(s => s.trim()) : [];
 
-            // Pack images & offer_tag inside JSONB specs
+            // Pack images, offer_tag, and SEO settings inside JSONB specs
             const specsObj = {
                 "Brand": brand,
                 "Warranty": "6 Months Store Warranty",
-                "images": images
+                "images": images,
+                "seo": {
+                    "slug": slugVal,
+                    "meta_title": metaTitleVal,
+                    "meta_description": metaDescVal,
+                    "meta_keywords": metaKwVal
+                }
             };
             if (offer_tag) specsObj.offer_tag = offer_tag;
 
             const payloadToSupabase = {
                 id,
                 title,
-                slug: title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString(36),
+                slug: slugVal,
                 category,
                 brand,
                 selling_price,
@@ -2217,6 +2614,10 @@
 
             const localProd = {
                 ...payloadToSupabase,
+                slug: slugVal,
+                meta_title: metaTitleVal,
+                meta_description: metaDescVal,
+                meta_keywords: metaKwVal,
                 images,
                 offer_tag,
                 discount_percent: Math.round(((mrp - selling_price) / mrp) * 100)
@@ -2237,7 +2638,7 @@
                         body: JSON.stringify(payloadToSupabase)
                     });
                     if (res.ok) {
-                        showToast('New product published to Supabase!');
+                        showToast('New product published to Supabase with full SEO!');
                     } else {
                         const err = await res.json().catch(() => ({}));
                         alert(`Failed to save to Supabase: ${err.message || res.statusText}`);
@@ -2250,8 +2651,10 @@
 
             document.getElementById('newProductForm').reset();
             clearNewPhotos();
+            npSlugTouchedManually = false;
             updateNewProdDiscount();
             updateBadgePreview('np');
+            updateSeoPreview('np');
         });
 
         // ====================================================================
@@ -2291,6 +2694,15 @@
             document.getElementById('epHighlights').value = Array.isArray(p.highlights) ? p.highlights.join(', ') : '';
             document.getElementById('epDescription').value = p.description || '';
 
+            // Pre-fill SEO fields
+            const seoObj = (p.specs && p.specs.seo) || {};
+            document.getElementById('epSlug').value = p.slug || seoObj.slug || generateSlug(p.title);
+            document.getElementById('epMetaTitle').value = p.meta_title || seoObj.meta_title || generateDefaultMetaTitle(p.title, p.category);
+            document.getElementById('epMetaDesc').value = p.meta_description || seoObj.meta_description || generateDefaultMetaDesc(p.title, p.selling_price, p.mrp);
+            document.getElementById('epMetaKeywords').value = p.meta_keywords || seoObj.meta_keywords || generateDefaultKeywords(p.title, p.category, p.brand);
+            epSlugTouchedManually = false;
+            updateSeoPreview('ep');
+
             // Clone photos from specs.images or p.images
             const currentImgs = (p.specs && Array.isArray(p.specs.images) && p.specs.images.length > 0)
                 ? p.specs.images
@@ -2325,6 +2737,12 @@
             const highlightsRaw = document.getElementById('epHighlights').value.trim();
             const description = document.getElementById('epDescription').value.trim();
 
+            // SEO & Meta Fields
+            const slugVal = (document.getElementById('epSlug').value.trim() || generateSlug(title)).toLowerCase();
+            const metaTitleVal = document.getElementById('epMetaTitle').value.trim() || generateDefaultMetaTitle(title, category);
+            const metaDescVal = document.getElementById('epMetaDesc').value.trim() || generateDefaultMetaDesc(title, selling_price, mrp);
+            const metaKwVal = document.getElementById('epMetaKeywords').value.trim();
+
             const images = editProdPhotos.length > 0 
                 ? [...editProdPhotos] 
                 : ['images/category-cases-v2.png'];
@@ -2335,9 +2753,15 @@
                 ? Math.round(((mrp - selling_price) / mrp) * 100) 
                 : 0;
 
-            // Pack multiple images and offer_tag inside JSONB specs
+            // Pack multiple images, offer_tag, and SEO settings inside JSONB specs
             const specsObj = (p.specs && typeof p.specs === 'object') ? { ...p.specs } : {};
             specsObj.images = images;
+            specsObj.seo = {
+                slug: slugVal,
+                meta_title: metaTitleVal,
+                meta_description: metaDescVal,
+                meta_keywords: metaKwVal
+            };
             if (offer_tag) {
                 specsObj.offer_tag = offer_tag;
             } else {
@@ -2347,6 +2771,7 @@
             // Clean payload matching PostgreSQL schema
             const payloadToSupabase = {
                 title,
+                slug: slugVal,
                 category,
                 brand,
                 stock_status,
@@ -2378,13 +2803,17 @@
                         if (Array.isArray(updatedRows) && updatedRows.length > 0) {
                             Object.assign(p, {
                                 ...payloadToSupabase,
+                                slug: slugVal,
+                                meta_title: metaTitleVal,
+                                meta_description: metaDescVal,
+                                meta_keywords: metaKwVal,
                                 images,
                                 offer_tag,
                                 discount_percent
                             });
                             renderTable();
                             closeEditModal();
-                            showToast(`Updated "${title}" in Supabase successfully!`);
+                            showToast(`Updated "${title}" in Supabase with SEO!`);
                             return;
                         } else {
                             alert('⚠️ Supabase returned 0 updated rows. Please check if write permissions are enabled.');
@@ -2404,6 +2833,10 @@
             // Fallback for offline local update
             Object.assign(p, {
                 ...payloadToSupabase,
+                slug: slugVal,
+                meta_title: metaTitleVal,
+                meta_description: metaDescVal,
+                meta_keywords: metaKwVal,
                 images,
                 offer_tag,
                 discount_percent
@@ -2443,13 +2876,15 @@
             let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n    <!-- Homepage -->\n    <url>\n        <loc>${SITE_URL}/</loc>\n        <lastmod>${today}</lastmod>\n        <changefreq>daily</changefreq>\n        <priority>1.0</priority>\n    </url>\n    <!-- Deals & Products Section -->\n    <url>\n        <loc>${SITE_URL}/#products</loc>\n        <lastmod>${today}</lastmod>\n        <changefreq>daily</changefreq>\n        <priority>0.9</priority>\n    </url>\n    <!-- Store Catalog -->\n    <url>\n        <loc>${SITE_URL}/#catalog</loc>\n        <lastmod>${today}</lastmod>\n        <changefreq>weekly</changefreq>\n        <priority>0.8</priority>\n    </url>\n`;
 
             products.forEach(p => {
-                const slug = p.slug || (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const seoObj = (p.specs && p.specs.seo) || {};
+                const slug = p.slug || seoObj.slug || (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 const productUrl = `${SITE_URL}/product.html?id=${encodeURIComponent(p.id)}&amp;name=${encodeURIComponent(slug)}`;
                 const lastMod = p.updated_at ? p.updated_at.split('T')[0] : today;
                 let imgUrl = (Array.isArray(p.images) && p.images[0]) || p.image || 'images/category-cases-v2.png';
                 if (!imgUrl.startsWith('http')) imgUrl = `${SITE_URL}/${imgUrl.replace(/^\/+/, '')}`;
+                const titleText = p.meta_title || seoObj.meta_title || p.title || '';
 
-                xml += `    <!-- Product: ${(p.title || '').replace(/&/g, '&amp;')} -->\n    <url>\n        <loc>${productUrl}</loc>\n        <lastmod>${lastMod}</lastmod>\n        <changefreq>weekly</changefreq>\n        <priority>0.85</priority>\n        <image:image>\n            <image:loc>${imgUrl.replace(/&/g, '&amp;')}</image:loc>\n            <image:title>${(p.title || '').replace(/&/g, '&amp;')}</image:title>\n            <image:caption>Buy ${(p.title || '').replace(/&/g, '&amp;')} at MKart Gajuwaka Vizag</image:caption>\n        </image:image>\n    </url>\n`;
+                xml += `    <!-- Product: ${titleText.replace(/&/g, '&amp;')} -->\n    <url>\n        <loc>${productUrl}</loc>\n        <lastmod>${lastMod}</lastmod>\n        <changefreq>weekly</changefreq>\n        <priority>0.85</priority>\n        <image:image>\n            <image:loc>${imgUrl.replace(/&/g, '&amp;')}</image:loc>\n            <image:title>${titleText.replace(/&/g, '&amp;')}</image:title>\n            <image:caption>Buy ${titleText.replace(/&/g, '&amp;')} at MKart Gajuwaka Vizag</image:caption>\n        </image:image>\n    </url>\n`;
             });
             xml += `</urlset>\n`;
 
@@ -2549,7 +2984,7 @@
                 if (overlay) overlay.style.display = 'none';
                 showToast('Unlocked Admin Panel!');
             } else {
-                if (errMsg) errMsg.textContent = 'Incorrect PIN! Try 8855 or check settings.';
+                if (errMsg) errMsg.textContent = 'Incorrect PIN. Please try again.';
                 const box = document.querySelector('.pin-box');
                 if (box) {
                     box.style.animation = 'none';

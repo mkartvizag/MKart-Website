@@ -526,25 +526,26 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
     }
 
     updateSEO(p) {
-        const slug = p.slug || (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const seoObj = (p.specs && p.specs.seo) || {};
+        const slug = p.slug || seoObj.slug || (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const canonicalUrl = `https://www.mkartvizag.in/product.html?id=${encodeURIComponent(p.id)}&name=${encodeURIComponent(slug)}`;
         
-        // Dynamic Page Title
-        const pageTitle = `${p.title} - Price ₹${p.selling_price} | MKart Gajuwaka Vizag`;
+        // Dynamic Page Title (Uses Custom Google SEO Title if defined)
+        const pageTitle = p.meta_title || seoObj.meta_title || `${p.title} - Price ₹${p.selling_price} | MKart Gajuwaka Vizag`;
         document.title = pageTitle;
         const pageTitleEl = document.getElementById('pageTitle');
         if (pageTitleEl) pageTitleEl.textContent = pageTitle;
 
-        // Meta Description
-        const desc = p.description 
+        // Meta Description (Uses Custom Google Meta Description if defined)
+        const desc = p.meta_description || seoObj.meta_description || (p.description 
             ? `${p.title} at ₹${p.selling_price} (MRP ₹${p.mrp || p.selling_price}). ${p.description.slice(0, 130)}... In-store pickup & delivery in Vizag.`
-            : `Buy ${p.title} at lowest price ₹${p.selling_price} in Gajuwaka, Visakhapatnam. Genuine quality, 1-click WhatsApp order & store warranty at MKart.`;
+            : `Buy ${p.title} at lowest price ₹${p.selling_price} in Gajuwaka, Visakhapatnam. Genuine quality, 1-click WhatsApp order & store warranty at MKart.`);
         
         const metaDesc = document.getElementById('metaDescription');
         if (metaDesc) metaDesc.setAttribute('content', desc);
 
         // Keywords
-        const keywords = `${p.title}, buy ${p.title} vizag, ${p.category || 'mobile accessories'} gajuwaka, ${p.brand || 'phone accessories'} store vizag, mobile shop gajuwaka, mkart vizag`;
+        const keywords = p.meta_keywords || seoObj.meta_keywords || `${p.title}, buy ${p.title} vizag, ${p.category || 'mobile accessories'} gajuwaka, ${p.brand || 'phone accessories'} store vizag, mobile shop gajuwaka, mkart vizag`;
         const metaKw = document.getElementById('metaKeywords');
         if (metaKw) metaKw.setAttribute('content', keywords);
 
