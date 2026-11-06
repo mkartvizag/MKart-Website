@@ -814,4 +814,22 @@
     .fk-detail-selling-price {
         font-size: 1.8rem;
     }
+    .fk-detail-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 6px;
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fk-detail-actions {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .fk-btn-buy-wa, .fk-btn-call-store {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+    }
 }

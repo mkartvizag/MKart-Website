@@ -201,22 +201,6 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                      height="440">
                             </div>
                         </div>
-
-                        <!-- Flipkart CTAs directly under Image -->
-                        <div class="fk-detail-actions">
-                            <a href="https://wa.me/919966258855?text=${waText}" 
-                               target="_blank" 
-                               rel="noopener" 
-                               class="fk-btn-buy-wa"
-                               aria-label="Order on WhatsApp">
-                                <i class="fa-brands fa-whatsapp"></i> ORDER ON WHATSAPP
-                            </a>
-                            <a href="tel:+919966258855" 
-                               class="fk-btn-call-store"
-                               aria-label="Call store to reserve">
-                                <i class="fa-solid fa-phone"></i> CALL TO RESERVE
-                            </a>
-                        </div>
                     </div>
 
                     <!-- Right: Product Information & Specifications -->
@@ -261,6 +245,22 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                 </div>
                             ` : ''}
                             <span class="fk-tax-note">Inclusive of all local taxes • Free store installation included</span>
+                        </div>
+
+                        <!-- Instant Action Buttons (Positioned directly after Price) -->
+                        <div class="fk-detail-actions">
+                            <a href="https://wa.me/919966258855?text=${waText}" 
+                               target="_blank" 
+                               rel="noopener" 
+                               class="fk-btn-buy-wa"
+                               aria-label="Order on WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i> ORDER ON WHATSAPP
+                            </a>
+                            <a href="tel:+919966258855" 
+                               class="fk-btn-call-store"
+                               aria-label="Call store to reserve">
+                                <i class="fa-solid fa-phone"></i> CALL TO RESERVE
+                            </a>
                         </div>
 
                         <!-- Available Offers (Flipkart Style) -->
