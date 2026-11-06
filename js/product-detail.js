@@ -107,14 +107,17 @@ class ProductDetailPage {
         const p = this.product;
         if (!p) return;
 
-        // Images array extraction
+        // Images array extraction with clean fallback
+        let rawImgs = [];
         if (p.specs && Array.isArray(p.specs.images) && p.specs.images.length > 0) {
-            this.images = p.specs.images;
+            rawImgs = p.specs.images;
         } else if (Array.isArray(p.images) && p.images.length > 0) {
-            this.images = p.images;
+            rawImgs = p.images;
         } else if (p.image) {
-            this.images = [p.image];
-        } else {
+            rawImgs = [p.image];
+        }
+        this.images = rawImgs.filter(img => typeof img === 'string' && img.trim().length > 0);
+        if (this.images.length === 0) {
             this.images = ['images/category-cases-v2.png'];
         }
 
@@ -182,7 +185,7 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                             aria-label="View photo ${idx + 1}"
                                             role="tab"
                                             aria-selected="${idx === 0 ? 'true' : 'false'}">
-                                        <img src="${img}" alt="${p.title} photo ${idx + 1}" loading="lazy">
+                                        <img src="${img}" alt="${p.title} photo ${idx + 1}" loading="lazy" onerror="this.onerror=null; this.src='images/category-cases-v2.png';">
                                     </button>
                                 `).join('')}
                             </div>
@@ -198,7 +201,8 @@ Please confirm stock availability for store pickup / delivery in Visakhapatnam.`
                                      alt="${p.title}" 
                                      fetchpriority="high"
                                      width="440" 
-                                     height="440">
+                                     height="440"
+                                     onerror="this.onerror=null; this.src='images/category-cases-v2.png';">
                             </div>
                         </div>
                     </div>
