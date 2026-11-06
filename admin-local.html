@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MKart Admin">
+    <meta name="theme-color" content="#e60000">
     <title>MKart Local Admin - Full Product, Photo & Price Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -436,9 +441,215 @@
             border-radius: 99px;
             background: #e60000;
         }
+
+        /* Responsive Table Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Security PIN Lock Overlay */
+        .pin-lock-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #fff;
+        }
+        .pin-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .pin-dots {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 22px 0 24px;
+        }
+        .pin-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+        .pin-dot.filled {
+            background: #e60000;
+            border-color: #e60000;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(230,0,0,0.6);
+        }
+        .pin-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        .pin-key {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .pin-key:active {
+            background: rgba(230,0,0,0.4);
+            transform: scale(0.92);
+        }
+        .pin-key.action-key {
+            font-size: 1rem;
+            background: transparent;
+            border-color: transparent;
+            color: #94a3b8;
+        }
+        @keyframes pinShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        /* Mobile Specific Responsiveness */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 12px 16px;
+            }
+            .admin-header-actions {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .admin-header-actions .btn {
+                flex: 1 1 auto;
+                padding: 8px 10px;
+                font-size: 0.8rem;
+                justify-content: center;
+            }
+            .container {
+                padding: 0 10px;
+                margin: 16px auto;
+            }
+            .settings-card {
+                padding: 16px 14px;
+                border-radius: 12px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            .form-control {
+                font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+                padding: 12px 14px;
+            }
+            .photo-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+            .prod-thumb {
+                width: 42px;
+                height: 42px;
+            }
+            .table-toolbar {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .table-toolbar input {
+                max-width: 100% !important;
+                width: 100%;
+            }
+            dialog.admin-modal {
+                width: 96vw;
+                max-height: 94vh;
+                border-radius: 12px;
+            }
+            .modal-body {
+                padding: 14px;
+            }
+            .modal-header, .modal-footer {
+                padding: 12px 16px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Security PIN Lock Screen -->
+    <div id="pinLockOverlay" class="pin-lock-overlay" style="display: none;">
+        <div class="pin-box">
+            <div style="font-size: 2.2rem; color: #e60000; margin-bottom: 8px;">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">MKart Admin Lock</h2>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;">
+                Enter 4-digit Store Passcode to access inventory &amp; photo uploads on this phone
+            </p>
+
+            <div class="pin-dots">
+                <div class="pin-dot" id="pdot0"></div>
+                <div class="pin-dot" id="pdot1"></div>
+                <div class="pin-dot" id="pdot2"></div>
+                <div class="pin-dot" id="pdot3"></div>
+            </div>
+
+            <div id="pinErrorMsg" style="color: #f87171; font-size: 0.82rem; font-weight: 700; min-height: 20px; margin-bottom: 12px;"></div>
+
+            <div class="pin-keypad">
+                <button type="button" class="pin-key" onclick="pressPin('1')">1</button>
+                <button type="button" class="pin-key" onclick="pressPin('2')">2</button>
+                <button type="button" class="pin-key" onclick="pressPin('3')">3</button>
+                <button type="button" class="pin-key" onclick="pressPin('4')">4</button>
+                <button type="button" class="pin-key" onclick="pressPin('5')">5</button>
+                <button type="button" class="pin-key" onclick="pressPin('6')">6</button>
+                <button type="button" class="pin-key" onclick="pressPin('7')">7</button>
+                <button type="button" class="pin-key" onclick="pressPin('8')">8</button>
+                <button type="button" class="pin-key" onclick="pressPin('9')">9</button>
+                <button type="button" class="pin-key action-key" onclick="clearPin()">Clear</button>
+                <button type="button" class="pin-key" onclick="pressPin('0')">0</button>
+                <button type="button" class="pin-key action-key" onclick="backspacePin()"><i class="fa-solid fa-delete-left"></i></button>
+            </div>
+
+            <div style="margin-top: 18px; font-size: 0.78rem; color: #94a3b8;">
+                <label style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" id="rememberPhoneCheck" checked style="accent-color: #e60000;">
+                    Keep me logged in on this phone
+                </label>
+            </div>
+            <div style="margin-top: 8px; font-size: 0.72rem; color: #64748b;">
+                Default Store PIN: <strong>8855</strong>
+            </div>
+        </div>
+    </div>
 
     <!-- Header -->
     <header class="admin-header">
@@ -449,15 +660,18 @@
                 <i class="fa-solid fa-circle-check"></i> Connected to Supabase
             </span>
         </div>
-        <div style="display: flex; gap: 10px;">
-            <a href="http://localhost:3000" target="_blank" class="btn btn-outline">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Store
+        <div class="admin-header-actions" style="display: flex; gap: 8px;">
+            <a href="http://localhost:3000" target="_blank" class="btn btn-outline" title="Open Store">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Store
             </a>
             <button id="sitemapBtn" class="btn btn-outline" title="Generate Google Sitemap (sitemap.xml) for all products">
-                <i class="fa-solid fa-sitemap"></i> Google Sitemap
+                <i class="fa-solid fa-sitemap"></i> Sitemap
             </button>
-            <button id="backupBtn" class="btn btn-outline">
-                <i class="fa-solid fa-download"></i> Backup JSON
+            <button id="backupBtn" class="btn btn-outline" title="Download JSON Backup">
+                <i class="fa-solid fa-download"></i> Backup
+            </button>
+            <button type="button" class="btn btn-outline" onclick="lockAdminSession()" title="Lock Admin Screen" style="border-color: #fecdd3; color: #e60000;">
+                <i class="fa-solid fa-lock"></i> Lock
             </button>
         </div>
     </header>
@@ -753,10 +967,14 @@
                     </p>
                     
                     <input type="file" id="newProdFileInput" accept="image/*" multiple style="display: none;">
+                    <input type="file" id="newProdCameraInput" accept="image/*" capture="environment" style="display: none;">
                     
                     <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                         <button type="button" class="btn btn-primary" onclick="document.getElementById('newProdFileInput').click()">
-                            <i class="fa-solid fa-images"></i> Upload Photos to Supabase
+                            <i class="fa-solid fa-images"></i> Phone Gallery / Files
+                        </button>
+                        <button type="button" class="btn btn-outline" onclick="document.getElementById('newProdCameraInput').click()" style="border-color: #e60000; color: #e60000; background: #fff5f5;">
+                            <i class="fa-solid fa-camera"></i> Take Photo with Camera
                         </button>
                         <button type="button" class="btn btn-outline" id="newProdClearPhotosBtn" onclick="clearNewPhotos()" style="display: none;">
                             <i class="fa-solid fa-trash-can"></i> Clear All Photos
@@ -799,22 +1017,24 @@
                 </div>
                 <input type="text" id="tableSearch" class="form-control" style="max-width: 280px;" placeholder="Search products...">
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Cover Photo</th>
-                        <th>Product &amp; Category</th>
-                        <th>Badge &amp; Offer</th>
-                        <th>Offer Price (₹)</th>
-                        <th>MRP (₹)</th>
-                        <th>Stock</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="inventoryTableBody">
-                    <!-- Populated dynamically via JavaScript -->
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cover Photo</th>
+                            <th>Product &amp; Category</th>
+                            <th>Badge &amp; Offer</th>
+                            <th>Offer Price (₹)</th>
+                            <th>MRP (₹)</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody">
+                        <!-- Populated dynamically via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -892,12 +1112,18 @@
                 <div style="margin-top: 18px; padding: 16px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <h4 style="font-size: 0.95rem; font-weight: 800;">Product Photos (Click "Set as Cover" to choose primary photo)</h4>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('editProdFileInput').click()">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> Add Photos
-                        </button>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('editProdFileInput').click()">
+                                <i class="fa-solid fa-images"></i> Gallery
+                            </button>
+                            <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('editProdCameraInput').click()" style="border-color: #e60000; color: #e60000; background: #fff5f5;">
+                                <i class="fa-solid fa-camera"></i> Camera
+                            </button>
+                        </div>
                     </div>
                     
                     <input type="file" id="editProdFileInput" accept="image/*" multiple style="display: none;">
+                    <input type="file" id="editProdCameraInput" accept="image/*" capture="environment" style="display: none;">
 
                     <div id="editProdUploadProgress" style="display: none; margin-bottom: 10px; font-weight: 700; color: var(--primary);">
                         <i class="fa-solid fa-spinner fa-spin"></i> <span id="editProdProgressText">Uploading...</span>
@@ -1338,6 +1564,15 @@
             });
         }
 
+        const newCameraInput = document.getElementById('newProdCameraInput');
+        if (newCameraInput) {
+            newCameraInput.addEventListener('change', async (e) => {
+                await handleFileUpload(Array.from(e.target.files), newProdPhotos, 'newProd');
+                newCameraInput.value = '';
+                renderNewProdPhotos();
+            });
+        }
+
         async function handleFileUpload(files, targetArray, prefix) {
             if (!files.length) return;
             if (targetArray.length + files.length > 6) {
@@ -1671,6 +1906,15 @@
             });
         }
 
+        const editCameraInput = document.getElementById('editProdCameraInput');
+        if (editCameraInput) {
+            editCameraInput.addEventListener('change', async (e) => {
+                await handleFileUpload(Array.from(e.target.files), editProdPhotos, 'editProd');
+                editCameraInput.value = '';
+                renderPhotosGrid('editProdPhotosGrid', editProdPhotos, 'edit');
+            });
+        }
+
         function openEditModal(productId) {
             const p = products.find(item => item.id === productId);
             if (!p) return;
@@ -1879,7 +2123,102 @@
             setTimeout(() => { t.style.display = 'none'; }, 3200);
         }
 
+        // ====================================================================
+        // SECURITY PIN LOCK LOGIC
+        // ====================================================================
+        let currentPinEntered = '';
+
+        function checkPinAuth() {
+            const isAuth = localStorage.getItem('mkart_admin_auth') || sessionStorage.getItem('mkart_admin_auth');
+            const overlay = document.getElementById('pinLockOverlay');
+            if (isAuth === 'granted') {
+                if (overlay) overlay.style.display = 'none';
+            } else {
+                if (overlay) overlay.style.display = 'flex';
+                currentPinEntered = '';
+                updatePinDots();
+            }
+        }
+
+        function getStoredPin() {
+            return localStorage.getItem('mkart_admin_pin') || '8855';
+        }
+
+        function pressPin(digit) {
+            if (currentPinEntered.length >= 4) return;
+            currentPinEntered += digit;
+            updatePinDots();
+
+            if (currentPinEntered.length === 4) {
+                setTimeout(verifyPin, 120);
+            }
+        }
+
+        function clearPin() {
+            currentPinEntered = '';
+            updatePinDots();
+            const err = document.getElementById('pinErrorMsg');
+            if (err) err.textContent = '';
+        }
+
+        function backspacePin() {
+            currentPinEntered = currentPinEntered.slice(0, -1);
+            updatePinDots();
+            const err = document.getElementById('pinErrorMsg');
+            if (err) err.textContent = '';
+        }
+
+        function updatePinDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`pdot${i}`);
+                if (dot) dot.classList.toggle('filled', i < currentPinEntered.length);
+            }
+        }
+
+        function verifyPin() {
+            const correctPin = getStoredPin();
+            const errMsg = document.getElementById('pinErrorMsg');
+            if (currentPinEntered === correctPin) {
+                const remCheck = document.getElementById('rememberPhoneCheck');
+                if (remCheck && remCheck.checked) {
+                    localStorage.setItem('mkart_admin_auth', 'granted');
+                } else {
+                    sessionStorage.setItem('mkart_admin_auth', 'granted');
+                }
+                const overlay = document.getElementById('pinLockOverlay');
+                if (overlay) overlay.style.display = 'none';
+                showToast('Unlocked Admin Panel!');
+            } else {
+                if (errMsg) errMsg.textContent = 'Incorrect PIN! Try 8855 or check settings.';
+                const box = document.querySelector('.pin-box');
+                if (box) {
+                    box.style.animation = 'none';
+                    box.offsetHeight;
+                    box.style.animation = 'pinShake 0.4s ease';
+                }
+                setTimeout(clearPin, 600);
+            }
+        }
+
+        function lockAdminSession() {
+            localStorage.removeItem('mkart_admin_auth');
+            sessionStorage.removeItem('mkart_admin_auth');
+            checkPinAuth();
+            showToast('Locked Admin Panel');
+        }
+
+        // Support physical keyboard
+        window.addEventListener('keydown', (e) => {
+            const overlay = document.getElementById('pinLockOverlay');
+            if (overlay && overlay.style.display !== 'none') {
+                if (e.key >= '0' && e.key <= '9') pressPin(e.key);
+                else if (e.key === 'Backspace') backspacePin();
+                else if (e.key === 'Escape') clearPin();
+            }
+        });
+
         // Init
+        checkPinAuth();
         loadProducts();
         updateNewProdDiscount();
         updateBadgePreview('np');
